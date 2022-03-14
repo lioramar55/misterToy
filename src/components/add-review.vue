@@ -1,7 +1,7 @@
 <template>
   <section class="add-review">
     <h2>Add a review</h2>
-    <form @submit.prevent="onSubmit">
+    <form class="review-form" @submit.prevent="onSubmit">
       <label>
         First name:
         <input type="text" placeholder="Enter your first name" v-model="review.name" required />
@@ -10,21 +10,20 @@
         Rating:
         <select v-model="review.rate" required>
           <option v-for="rate in rates" :key="rate" :value="rate">
-            {{ '*'.repeat(rate) }}
+            {{ '⭐'.repeat(rate) }}
           </option>
         </select>
       </label>
       <label>
-        Read at:
-        <input type="date" v-model="review.date" required />
+        Purchased at:
+        <input type="date" v-model="review.date" />
       </label>
       <label
         >Your review:
-        <textarea cols="30" rows="10" v-model="review.text" required></textarea>
+        <textarea cols="20" rows="5" v-model="review.text" required></textarea>
       </label>
       <button>Submit</button>
     </form>
-    <button @click="closeReview" class="close-review">X</button>
   </section>
 </template>
 
@@ -41,7 +40,19 @@ export default {
       rates: [1, 2, 3, 4, 5],
     }
   },
+  methods: {
+    onSubmit() {
+      this.$store.dispatch({ type: 'addReview', review: { ...this.review } })
+    },
+  },
 }
 </script>
 
-<style></style>
+<style scoped>
+.review-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+</style>

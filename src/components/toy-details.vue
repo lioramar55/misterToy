@@ -20,6 +20,7 @@
     <span class="label" v-for="label in toy.labels" :key="label + toy._id">
       {{ label }}
     </span>
+    <add-review></add-review>
     <toy-reviews :toy="toy"></toy-reviews>
   </section>
   <section v-else class="loader">Loading...</section>
@@ -28,6 +29,7 @@
 <script>
 import toyService from '../services/toy-service'
 import toyReviews from './toy-reviews.vue'
+import addReview from './add-review.vue'
 export default {
   name: 'toy-details',
   data() {
@@ -41,6 +43,7 @@ export default {
   },
   components: {
     toyReviews,
+    addReview,
   },
   computed: {
     isAvailable() {

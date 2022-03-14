@@ -4,9 +4,7 @@ import { storageService } from './async-storage.service.js'
 const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor']
 const KEY = 'toysDB'
 
-storageService.query(KEY).then((toys) => (!toys ? _storeDemoData() : ''))
-
-_storeDemoData()
+storageService.query(KEY).then((toys) => (!toys.length ? _storeDemoData() : ''))
 
 function query() {
   return storageService.query(KEY)
@@ -36,7 +34,26 @@ function _storeDemoData() {
       type: 'Funny',
       createdAt: '1973-07-11T13:30:49.032Z',
       labels: ['Doll', 'Puzzle', 'Outdoor'],
-      reviews: [],
+      reviews: [
+        {
+          name: 'Pukit',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'I loved the product',
+        },
+        {
+          name: 'Shuli',
+          rate: 4,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: "It's the best product",
+        },
+        {
+          name: 'Karen',
+          rate: 2,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'Product is damaged',
+        },
+      ],
       inStock: true,
     },
     {
@@ -46,7 +63,26 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1981-08-27T15:09:21.294Z',
       labels: ['On wheels', 'Box game', 'Art'],
-      reviews: [],
+      reviews: [
+        {
+          name: 'Puki',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'I loved it',
+        },
+        {
+          name: 'Shuli',
+          rate: 3,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: "It's ok",
+        },
+        {
+          name: 'Karen',
+          rate: 2,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'Product arrived in bad shape and is damaged',
+        },
+      ],
       inStock: true,
     },
     {
@@ -56,7 +92,26 @@ function _storeDemoData() {
       type: 'Funny',
       createdAt: '1986-11-02T20:23:58.834Z',
       labels: ['Baby', 'Doll'],
-      reviews: [],
+      reviews: [
+        {
+          name: 'Puki',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'As always, great product',
+        },
+        {
+          name: 'Shuli',
+          rate: 1,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: "It's not recommended",
+        },
+        {
+          name: 'Karen',
+          rate: 2,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'Same same',
+        },
+      ],
       inStock: false,
     },
     {
@@ -66,7 +121,32 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1995-03-29T07:57:16.160Z',
       labels: ['On wheels', 'Puzzle', 'Outdoor'],
-      reviews: [],
+      reviews: [
+        {
+          name: 'Ben Bintz',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'I loved it',
+        },
+        {
+          name: 'Puki',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'As always, great product',
+        },
+        {
+          name: 'Shuli',
+          rate: 1,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: "It's not recommended",
+        },
+        {
+          name: 'Karen',
+          rate: 2,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'Same same',
+        },
+      ],
       inStock: true,
     },
     {
@@ -86,7 +166,32 @@ function _storeDemoData() {
       type: 'Adult',
       createdAt: '1994-06-19T23:12:01.759Z',
       labels: ['On wheels', 'Box game', 'Art'],
-      reviews: [],
+      reviews: [
+        {
+          name: 'Ben Bintz',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'I loved it',
+        },
+        {
+          name: 'Puki',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'As always, great product',
+        },
+        {
+          name: 'Shuli',
+          rate: 1,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: "It's not recommended",
+        },
+        {
+          name: 'Karen',
+          rate: 2,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'Same same',
+        },
+      ],
       inStock: true,
     },
     {
@@ -97,7 +202,26 @@ function _storeDemoData() {
       createdAt: '1983-05-05T11:39:48.470Z',
       labels: ['Art'],
 
-      reviews: [],
+      reviews: [
+        {
+          name: 'Puki',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'I loved it',
+        },
+        {
+          name: 'Shuli',
+          rate: 3,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: "It's ok",
+        },
+        {
+          name: 'Karen',
+          rate: 2,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'Product arrived in bad shape and is damaged',
+        },
+      ],
       inStock: true,
     },
     {
@@ -137,7 +261,32 @@ function _storeDemoData() {
       type: 'Funny',
       createdAt: '1980-03-03T19:33:09.854Z',
       labels: ['Box game'],
-      reviews: [],
+      reviews: [
+        {
+          name: 'Ben Bintz',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'I loved it',
+        },
+        {
+          name: 'Puki',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'As always, great product',
+        },
+        {
+          name: 'Shuli',
+          rate: 1,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: "It's not recommended",
+        },
+        {
+          name: 'Karen',
+          rate: 2,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'Same same',
+        },
+      ],
       inStock: true,
     },
     {
@@ -147,7 +296,32 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1987-04-20T12:41:47.897Z',
       labels: ['On wheels'],
-      reviews: [],
+      reviews: [
+        {
+          name: 'Ben Bintz',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'I loved it',
+        },
+        {
+          name: 'Puki',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'As always, great product',
+        },
+        {
+          name: 'Shuli',
+          rate: 1,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: "It's not recommended",
+        },
+        {
+          name: 'Karen',
+          rate: 2,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'Same same',
+        },
+      ],
       inStock: false,
     },
     {
@@ -167,7 +341,32 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1996-02-14T03:11:46.518Z',
       labels: ['On wheels', 'Box game', 'Art'],
-      reviews: [],
+      reviews: [
+        {
+          name: 'Ben Bintz',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'I loved it',
+        },
+        {
+          name: 'Puki',
+          rate: 5,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'As always, great product',
+        },
+        {
+          name: 'Shuli',
+          rate: 1,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: "It's not recommended",
+        },
+        {
+          name: 'Karen',
+          rate: 2,
+          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
+          text: 'Same same',
+        },
+      ],
       inStock: true,
     },
     {

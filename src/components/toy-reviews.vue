@@ -10,7 +10,6 @@
       </div>
     </section>
     <h4 v-else>This toy has no reviews</h4>
-    <add-review></add-review>
   </section>
 </template>
 

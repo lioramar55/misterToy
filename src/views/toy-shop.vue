@@ -13,15 +13,15 @@ import toyService from '../services/toy-service.js'
 
 export default {
   name: 'toy-shop',
-  data() {
-    return { toys: null }
-  },
-  created() {
-    toyService.query().then((toys) => (this.toys = toys))
-  },
+  created() {},
   components: {
     toyList,
     toyFilter,
+  },
+  computed: {
+    toys() {
+      return this.$store.getters.toysForDisplay
+    },
   },
 }
 </script>

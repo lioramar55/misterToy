@@ -16,6 +16,9 @@ export default {
     appHeader,
     appFooter,
   },
+  created() {
+    this.$store.dispatch({ type: 'loadApp' })
+  },
 }
 </script>
 
