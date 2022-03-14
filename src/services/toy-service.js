@@ -36,6 +36,7 @@ function _storeDemoData() {
       type: 'Funny',
       createdAt: '1973-07-11T13:30:49.032Z',
       labels: ['Doll', 'Puzzle', 'Outdoor'],
+      reviews: [],
       inStock: true,
     },
     {
@@ -45,6 +46,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1981-08-27T15:09:21.294Z',
       labels: ['On wheels', 'Box game', 'Art'],
+      reviews: [],
       inStock: true,
     },
     {
@@ -54,6 +56,7 @@ function _storeDemoData() {
       type: 'Funny',
       createdAt: '1986-11-02T20:23:58.834Z',
       labels: ['Baby', 'Doll'],
+      reviews: [],
       inStock: false,
     },
     {
@@ -63,6 +66,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1995-03-29T07:57:16.160Z',
       labels: ['On wheels', 'Puzzle', 'Outdoor'],
+      reviews: [],
       inStock: true,
     },
     {
@@ -72,6 +76,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1977-04-25T21:57:19.388Z',
       labels: ['Puzzle'],
+      reviews: [],
       inStock: true,
     },
     {
@@ -81,7 +86,7 @@ function _storeDemoData() {
       type: 'Adult',
       createdAt: '1994-06-19T23:12:01.759Z',
       labels: ['On wheels', 'Box game', 'Art'],
-
+      reviews: [],
       inStock: true,
     },
     {
@@ -92,6 +97,7 @@ function _storeDemoData() {
       createdAt: '1983-05-05T11:39:48.470Z',
       labels: ['Art'],
 
+      reviews: [],
       inStock: true,
     },
     {
@@ -101,6 +107,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1983-11-20T03:59:06.177Z',
       labels: ['Box game', 'Art', 'Baby'],
+      reviews: [],
       inStock: true,
     },
     {
@@ -110,6 +117,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1986-05-08T09:40:52.307Z',
       labels: ['On wheels'],
+      reviews: [],
       inStock: true,
     },
     {
@@ -119,6 +127,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1989-04-30T10:25:14.765Z',
       labels: ['Art', 'Baby', 'Doll'],
+      reviews: [],
       inStock: false,
     },
     {
@@ -128,6 +137,7 @@ function _storeDemoData() {
       type: 'Funny',
       createdAt: '1980-03-03T19:33:09.854Z',
       labels: ['Box game'],
+      reviews: [],
       inStock: true,
     },
     {
@@ -137,6 +147,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1987-04-20T12:41:47.897Z',
       labels: ['On wheels'],
+      reviews: [],
       inStock: false,
     },
     {
@@ -146,6 +157,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1991-05-13T15:44:21.389Z',
       labels: ['Baby', 'Doll'],
+      reviews: [],
       inStock: true,
     },
     {
@@ -155,6 +167,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1996-02-14T03:11:46.518Z',
       labels: ['On wheels', 'Box game', 'Art'],
+      reviews: [],
       inStock: true,
     },
     {
@@ -164,6 +177,7 @@ function _storeDemoData() {
       type: 'Adult',
       createdAt: '1996-06-03T00:25:41.428Z',
       labels: ['Doll', 'Puzzle', 'Outdoor'],
+      reviews: [],
       inStock: false,
     },
     {
@@ -173,6 +187,7 @@ function _storeDemoData() {
       type: 'Funny',
       createdAt: '1975-08-03T04:45:44.718Z',
       labels: ['Art'],
+      reviews: [],
       inStock: false,
     },
     {
@@ -182,6 +197,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1984-09-30T23:03:14.758Z',
       labels: ['On wheels', 'Puzzle', 'Outdoor'],
+      reviews: [],
       inStock: false,
     },
     {
@@ -191,6 +207,7 @@ function _storeDemoData() {
       type: 'Funny',
       createdAt: '1984-02-18T21:41:01.529Z',
       labels: ['On wheels', 'Box game', 'Art', 'Baby', 'Doll'],
+      reviews: [],
       inStock: false,
     },
     {
@@ -200,6 +217,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1980-03-16T09:22:35.017Z',
       labels: ['On wheels', 'Puzzle', 'Outdoor'],
+      reviews: [],
       inStock: true,
     },
     {
@@ -209,6 +227,7 @@ function _storeDemoData() {
       type: 'Educational',
       createdAt: '1979-01-04T15:01:56.335Z',
       labels: ['Doll', 'Puzzle', 'Outdoor'],
+      reviews: [],
       inStock: true,
     },
   ]

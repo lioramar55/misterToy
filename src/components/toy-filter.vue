@@ -1,4 +1,8 @@
-<template></template>
+<template>
+  <section class="toy-filter">
+    <input type="text" placeholder="Search" v-model="filterBy.txt" @change="onInput" />
+  </section>
+</template>
 
 <script>
 export default {
@@ -12,6 +16,13 @@ export default {
         sortBy: '',
       },
     }
+  },
+  methods: {
+    onInput() {
+      _debounce(() => {
+        this.$store.dispatch({ type: 'setFilter', filterBy: { ...this.filterBy } })
+      }, 500)
+    },
   },
 }
 </script>
