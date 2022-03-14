@@ -17,11 +17,6 @@ const router = createRouter({
       component: toyShop,
     },
     {
-      path: '/shop',
-      name: 'shop',
-      component: toyShop,
-    },
-    {
       path: '/shop/:id',
       name: 'toy-details',
       component: toyDetails,
