@@ -1,11 +1,15 @@
 <template>
   <div class="toy-preview">
     <h2>{{ toy.name }}</h2>
-    <h3>Price: {{ toy.price }}</h3>
+    <h3>Price: {{ $filters.currencyUSD(toy.price) }}</h3>
     <h4>{{ isAvailable }}</h4>
     <p>Category: {{ toy.type }}</p>
-    <p>{{ time }}</p>
-    <button>Details</button>
+    <div class="labels">
+      <span class="label" v-for="label in toy.labels" :key="label + toy._id">
+        {{ label }}
+      </span>
+    </div>
+    <button @click="$router.push('/shop/' + toy._id)">Details</button>
   </div>
 </template>
 
