@@ -34,6 +34,9 @@ export default {
     setFilter(state, { filterBy }) {
       state.filterBy = filterBy
     },
+    reviewAdded(state, { toys }) {
+      state.toys = toys
+    },
   },
   actions: {
     loadToys({ commit }) {
@@ -43,6 +46,12 @@ export default {
     },
     setFilter({ commit }, { filterBy }) {
       commit({ type: 'setFilter', filterBy })
+    },
+    addReview({ commit }, { review, toy }) {
+      console.log('toy, review', toy, review)
+      toyService.addReview(toy, review).then((toys) => {
+        commit({ type: 'reviewAdded', toys })
+      })
     },
   },
 }

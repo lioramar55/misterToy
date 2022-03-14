@@ -4,7 +4,7 @@
       <div v-for="review in reviews" :key="review._id">
         <p><span>From:</span> {{ review.name }}</p>
         <p><span>At:</span> {{ review.date }}</p>
-        <p><span>Rate:</span> {{ review.rate }}</p>
+        <p><span>Rate:</span> {{ '⭐'.repeat(review.rate) }}</p>
         <p><span>Review:</span> {{ review.text }}</p>
         <button @click="removeReview(review._id)">X</button>
       </div>

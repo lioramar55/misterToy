@@ -42,7 +42,13 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$store.dispatch({ type: 'addReview', review: { ...this.review } })
+      this.$emit('reviewAdded', { ...this.review })
+      this.review = {
+        name: '',
+        rate: '',
+        date: new Date().toISOString().slice(0, 10),
+        text: '',
+      }
     },
   },
 }
@@ -54,5 +60,9 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+textarea {
+  resize: none;
 }
 </style>

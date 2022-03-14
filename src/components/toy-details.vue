@@ -20,7 +20,7 @@
     <span class="label" v-for="label in toy.labels" :key="label + toy._id">
       {{ label }}
     </span>
-    <add-review></add-review>
+    <add-review @reviewAdded="onAddReview"></add-review>
     <toy-reviews :toy="toy"></toy-reviews>
   </section>
   <section v-else class="loader">Loading...</section>
@@ -38,12 +38,20 @@ export default {
     }
   },
   created() {
-    const { id } = this.$route.params
-    toyService.getById(+id).then((toy) => (this.toy = toy))
+    this.loadToy()
   },
   components: {
     toyReviews,
     addReview,
+  },
+  methods: {
+    onAddReview(review) {
+      this.$store.dispatch({ type: 'addReview', review, toy: { ...this.toy } }).then(this.loadToy)
+    },
+    loadToy() {
+      const { id } = this.$route.params
+      toyService.getById(+id).then((toy) => (this.toy = toy))
+    },
   },
   computed: {
     isAvailable() {

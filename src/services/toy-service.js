@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { storageService } from './async-storage.service.js'
-
+import { utilService } from './util-service.js'
 const KEY = 'toysDB'
 
-storageService.query(KEY).then((toys) => (!toys.length ? _storeDemoData() : ''))
+storageService
+  .query(KEY)
+  .then((toys) => (!toys ? _storeDemoData() : toys.length ? '' : _storeDemoData()))
 
 function query() {
   return storageService.query(KEY)
@@ -22,6 +24,16 @@ function save(toyToSave) {
 }
 function remove(id) {
   return storageService.remove(KEY, id)
+}
+
+function addReview(oldToy, review) {
+  return query().then((toys) => {
+    const idx = toys.findIndex((toy) => toy._id === oldToy._id)
+    if (idx === -1) return Promise.reject()
+    review._id = utilService.makeId()
+    toys[idx].reviews.unshift(review)
+    return save(toys[idx])
+  })
 }
 
 function _storeDemoData() {
@@ -437,4 +449,5 @@ export default {
   getById,
   save,
   remove,
+  addReview,
 }
