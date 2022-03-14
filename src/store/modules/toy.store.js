@@ -15,7 +15,7 @@ export default {
         }
         if (filterBy.inStock === 'inStock') {
           filteredToys = filteredToys.filter((toy) => toy.inStock)
-        } else {
+        } else if (filterBy.inStock === 'outOfStock') {
           filteredToys = filteredToys.filter((toy) => !toy.inStock)
         }
         if (filterBy.label.length) {
@@ -48,7 +48,6 @@ export default {
       commit({ type: 'setFilter', filterBy })
     },
     addReview({ commit }, { review, toy }) {
-      console.log('toy, review', toy, review)
       toyService.addReview(toy, review).then((toys) => {
         commit({ type: 'reviewAdded', toys })
       })
