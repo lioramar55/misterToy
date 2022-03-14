@@ -1,7 +1,9 @@
 <template>
-  <h1>Hello Vue</h1>
+  <div class="main-layout">
+    <h1>Hello and welcome!</h1>
+    <router-link to="/shop">Visit our shop</router-link>
+  </div>
 </template>
-
 <script>
 export default {
   name: 'home',

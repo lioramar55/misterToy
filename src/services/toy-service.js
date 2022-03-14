@@ -3,16 +3,28 @@ import { storageService } from './async-storage.service.js'
 
 const KEY = 'toysDB'
 
-storageService.query(KEY).then((toys) => (!toys ? _storeDemoData : ''))
+storageService.query(KEY).then((toys) => (!toys ? _storeDemoData() : ''))
 
 _storeDemoData()
 
 function query() {
-  return storageService.get(KEY)
+  return storageService.query(KEY)
 }
-function getById() {}
-function save() {}
-function remove() {}
+
+function getById(id) {
+  return storageService.get(KEY, id)
+}
+
+function save(toyToSave) {
+  if (toyToSave._id) {
+    return storageService.put(KEY, toyToSave)
+  } else {
+    return storageService.post(KEY, toyToSave)
+  }
+}
+function remove(id) {
+  return storageService.remove(KEY, id)
+}
 
 function _storeDemoData() {
   const demoData = [
@@ -180,7 +192,7 @@ function _storeDemoData() {
   storageService.store(KEY, demoData)
 }
 
-module.exports = {
+export default {
   query,
   getById,
   save,
