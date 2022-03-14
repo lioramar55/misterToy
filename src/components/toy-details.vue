@@ -20,6 +20,8 @@
     <span class="label" v-for="label in toy.labels" :key="label + toy._id">
       {{ label }}
     </span>
+    <button @click="$router.push('/shop/edit/' + toy._id)">Edit toy</button>
+    <button @click="$router.push('/shop/')">Back to list</button>
     <add-review @reviewAdded="onAddReview"></add-review>
     <toy-reviews :toy="toy"></toy-reviews>
   </section>

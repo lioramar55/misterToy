@@ -37,6 +37,13 @@ export default {
     reviewAdded(state, { toys }) {
       state.toys = toys
     },
+    updateToy(state, { updatedToy }) {
+      console.log('updatedToy', updatedToy)
+      const idx = state.toys.findIndex((toy) => toy._id === updatedToy._id)
+      if (idx === -1) return Promise.reject()
+      state.toys[idx] = updatedToy
+      return Promise.resolve()
+    },
   },
   actions: {
     loadToys({ commit }) {
@@ -51,6 +58,9 @@ export default {
       toyService.addReview(toy, review).then((toys) => {
         commit({ type: 'reviewAdded', toys })
       })
+    },
+    updateToy({ commit }, { toy }) {
+      return toyService.save(toy).then((updatedToy) => commit({ type: 'updateToy', updatedToy }))
     },
   },
 }
