@@ -9,7 +9,6 @@
 <script>
 import appHeader from './components/app-header.vue'
 import appFooter from './components/app-footer.vue'
-import lodash from 'lodash'
 export default {
   name: 'app',
   components: {

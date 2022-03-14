@@ -15,8 +15,14 @@ export default {
         }
         if (filterBy.inStock === 'inStock') {
           filteredToys = filteredToys.filter((toy) => toy.inStock)
-        } else if (filterBy.inStock === 'outOfStock')
+        } else {
           filteredToys = filteredToys.filter((toy) => !toy.inStock)
+        }
+        if (filterBy.label.length) {
+          filteredToys = filteredToys.filter((toy) =>
+            filterBy.label.every((label) => toy.labels.find((toyLabel) => toyLabel === label))
+          )
+        }
         return filteredToys
       } else return toys
     },
@@ -25,12 +31,18 @@ export default {
     load(state, { toys }) {
       state.toys = toys
     },
+    setFilter(state, { filterBy }) {
+      state.filterBy = filterBy
+    },
   },
   actions: {
     loadToys({ commit }) {
       toyService.query().then((toys) => {
         commit({ type: 'load', toys })
       })
+    },
+    setFilter({ commit }, { filterBy }) {
+      commit({ type: 'setFilter', filterBy })
     },
   },
 }

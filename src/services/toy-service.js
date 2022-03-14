@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { storageService } from './async-storage.service.js'
 
-const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor']
 const KEY = 'toysDB'
 
 storageService.query(KEY).then((toys) => (!toys.length ? _storeDemoData() : ''))
