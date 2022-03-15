@@ -1,39 +1,47 @@
 <template>
   <section class="toy-details main-layout" v-if="toy">
-    <h1>Title: {{ toy.name }}</h1>
-    <h4>Published at {{ time }}</h4>
-    <h3>Category: {{ toy.type }}</h3>
-    <h3>Description</h3>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing
-      elit. Ipsum exercitationem soluta tenetur,
-      voluptatibus facilis nesciunt itaque dolorum totam
-      iure nisi pariatur doloribus placeat perferendis
-      officiis magnam illum maxime harum amet explicabo
-      alias. Excepturi sint asperiores perferendis alias
-      dolorem eos. Ea ratione voluptate quibusdam
-      consectetur fugit accusamus, earum, delectus in
-      pariatur enim quisquam iure eos nostrum? Nihil est
-      temporibus architecto commodi under
-    </p>
-    <h3>
-      Price:
-      {{ $filters.currencyUSD(toy.price) }}
-    </h3>
-    <h4>{{ isAvailable }}</h4>
-    <label-display :toy="toy"></label-display>
+    <el-page-header
+      :content="toy.name"
+      @back="$router.push('/toy/')"
+    />
+    <h2>{{ toy.name }}</h2>
+    <el-collapse accordion v-model="activeName">
+      <el-collapse-item name="1" title="Category">
+        {{ toy.type }}</el-collapse-item
+      >
+      <el-collapse-item name="2" title="Description"
+        >Lorem ipsum, dolor sit amet consectetur adipisicing
+        elit. Ipsum exercitationem soluta tenetur,
+        voluptatibus facilis nesciunt itaque dolorum totam
+        iure nisi pariatur doloribus placeat perferendis
+        officiis magnam illum maxime harum amet explicabo
+        alias. Excepturi sint asperiores
+        perferendis</el-collapse-item
+      >
+      <el-collapse-item name="3" title="Task"
+        >Task</el-collapse-item
+      >
+      <el-collapse-item name="4" title="Published at">{{
+        time
+      }}</el-collapse-item>
+      <el-collapse-item name="5" title="Price">{{
+        $filters.currencyUSD(toy.price)
+      }}</el-collapse-item>
+      <el-collapse-item name="6" title="Is available">{{
+        isAvailable
+      }}</el-collapse-item>
+      <el-collapse-item name="7" title="Labels"
+        ><label-display :toy="toy"></label-display
+      ></el-collapse-item>
+    </el-collapse>
+
     <el-button
       type="primary"
       @click="$router.push('/toy/edit/' + toy._id)"
     >
       Edit toy
     </el-button>
-    <el-button
-      type="primary"
-      @click="$router.push('/toy/')"
-    >
-      Back to list
-    </el-button>
+
     <add-review @reviewAdded="onAddReview"></add-review>
     <toy-reviews :toy="toy"></toy-reviews>
   </section>
@@ -50,6 +58,7 @@ export default {
   data() {
     return {
       toy: null,
+      activeName: 1,
     }
   },
   created() {
@@ -89,7 +98,7 @@ export default {
 </script>
 
 <style scoped>
-* {
+.toy-details {
   text-align: center;
 }
 </style>

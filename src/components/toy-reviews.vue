@@ -1,5 +1,6 @@
 <template>
   <section class="toy-reviews">
+    <h2>User reviews</h2>
     <div v-if="toy.reviews.length" class="reviews">
       <el-row>
         <el-col

@@ -114,11 +114,11 @@ export default {
         commit({ type: 'reviewAdded', toys })
       })
     },
-    updateToy({ commit }, { toy }) {
+    saveToy({ commit }, { toy }) {
       return toyService
         .save(toy)
-        .then((updatedToy) =>
-          commit({ type: 'updateToy', updatedToy })
+        .then((savedToy) =>
+          commit({ type: 'saveToy', savedToy })
         )
     },
   },

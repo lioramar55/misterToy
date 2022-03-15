@@ -11,6 +11,12 @@
     >
       Details
     </el-button>
+    <el-button
+      type="primary"
+      @click="$router.push('/toy/edit/' + toy._id)"
+    >
+      Edit toy
+    </el-button>
   </div>
 </template>
 

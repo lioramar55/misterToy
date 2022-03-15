@@ -2,6 +2,12 @@
   <div class="toy-shop main-layout">
     <h1>Welcome to the toy shop</h1>
     <toy-filter></toy-filter>
+    <el-button
+      type="primary"
+      @click="$router.push('/toy/edit/')"
+    >
+      Add toy
+    </el-button>
     <toy-list :toys="toys"></toy-list>
   </div>
 </template>
