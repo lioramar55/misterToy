@@ -1,48 +1,55 @@
 <template>
   <section class="toy-filter">
-    <input
-      type="text"
-      placeholder="Search"
-      v-model="filterBy.txt"
-      @input="onInput"
-    />
+    <label
+      >Search name
+      <el-input
+        v-model="filterBy.txt"
+        @input="onInput"
+        placeholder="Search for toy name"
+      />
+    </label>
     <label @click="setFilter">
       By stock
-      <select
+      <el-select
         v-model="filterBy.inStock"
         @change="setFilter"
+        class="m-2"
+        placeholder="In stock?"
+        size="large"
       >
-        <option value="">All</option>
-        <option value="true">In stock</option>
-        <option value="false">Out of stock</option>
-      </select>
+        <el-option
+          v-for="option in inStockOpt"
+          :key="option"
+          :value="option"
+          >{{ option }}</el-option
+        >
+      </el-select>
     </label>
     <label
       >By label
-      <select
-        @change="setFilter"
+      <el-select
         v-model="filterBy.label"
+        @change="setFilter"
         multiple
+        placeholder="Select"
+        style="width: 240px"
       >
-        <option
+        <el-option
           v-for="label in labels"
           :key="label"
           :value="label"
-        >
-          {{ label }}
-        </option>
-      </select>
-      <label
-        >Sort by:
-        <select
-          @change="setFilter"
-          v-model="filterBy.sortBy"
-        >
-          <option value="price">Price</option>
-          <option value="name">Name</option>
-        </select>
-      </label>
+        />
+      </el-select>
     </label>
+
+    <label>Sort By</label>
+
+    <el-button @click="setFilter('price')" type="info"
+      >Price
+    </el-button>
+    <el-button @click="setFilter('name')" type="info"
+      >Name</el-button
+    >
   </section>
 </template>
 
@@ -56,8 +63,10 @@ export default {
         inStock: '',
         type: '',
         sortBy: '',
+        dir: 1,
         label: [],
       },
+      inStockOpt: ['All', 'In stock', 'Out of stock'],
       labels: [
         'On wheels',
         'Box game',
@@ -77,11 +86,28 @@ export default {
         filterBy: JSON.parse(JSON.stringify(this.filterBy)),
       })
     },
-    setFilter() {
+    setFilter(sort = null) {
+      if (sort) {
+        this.filterBy.sortBy = sort
+        if (this.$store.getters.lastSortBy === sort)
+          this.filterBy.dir =
+            this.filterBy.dir === 1 ? -1 : 1
+      }
       this.$store.dispatch({
         type: 'setFilter',
         filterBy: JSON.parse(JSON.stringify(this.filterBy)),
       })
+    },
+  },
+  computed: {
+    isAsc() {
+      return this.filterBy.dir === 1
+    },
+    isByPrice() {
+      return this.filterBy.sort === 'price'
+    },
+    isByName() {
+      return this.filterBy.dir === 'name'
     },
   },
 }

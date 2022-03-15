@@ -21,19 +21,19 @@
       {{ $filters.currencyUSD(toy.price) }}
     </h3>
     <h4>{{ isAvailable }}</h4>
-    <span
-      class="label"
-      v-for="label in toy.labels"
-      :key="label + toy._id"
+    <label-display :toy="toy"></label-display>
+    <el-button
+      type="primary"
+      @click="$router.push('/toy/edit/' + toy._id)"
     >
-      {{ label }}
-    </span>
-    <button @click="$router.push('/toy/edit/' + toy._id)">
       Edit toy
-    </button>
-    <button @click="$router.push('/toy/')">
+    </el-button>
+    <el-button
+      type="primary"
+      @click="$router.push('/toy/')"
+    >
       Back to list
-    </button>
+    </el-button>
     <add-review @reviewAdded="onAddReview"></add-review>
     <toy-reviews :toy="toy"></toy-reviews>
   </section>
@@ -44,6 +44,7 @@
 import toyService from '../services/toy-service'
 import toyReviews from '../components/toy-reviews.vue'
 import addReview from '../components/add-review.vue'
+import labelDisplay from '../components/label-display.vue'
 export default {
   name: 'toy-details',
   data() {
@@ -57,6 +58,7 @@ export default {
   components: {
     toyReviews,
     addReview,
+    labelDisplay,
   },
   methods: {
     onAddReview(review) {
@@ -86,4 +88,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+* {
+  text-align: center;
+}
+</style>

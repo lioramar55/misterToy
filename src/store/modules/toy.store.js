@@ -9,6 +9,9 @@ export default {
     toys({ toys }) {
       return toys
     },
+    lastSortBy({ filterBy }) {
+      return filterBy?.sortBy ? filterBy.sortBy : null
+    },
     pieData({ toys }) {
       const typesMap = {}
       toys.forEach((toy) => {

@@ -1,8 +1,12 @@
 <template>
   <section v-if="toys" class="toy-list">
-    <div class="toy" v-for="toy in toys" :key="toy._id">
-      <toy-preview :toy="toy"></toy-preview>
-    </div>
+    <el-row>
+      <el-col v-for="toy in toys" :key="toy._id" :span="8">
+        <el-card :body-style="{ padding: '0px' }">
+          <toy-preview :toy="toy"></toy-preview>
+        </el-card>
+      </el-col>
+    </el-row>
   </section>
   <section v-else>Loading...</section>
 </template>
