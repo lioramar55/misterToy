@@ -1,34 +1,39 @@
 import axios from 'axios'
-import { storageService } from './async-storage.service.js'
 import { utilService } from './util-service.js'
-const KEY = 'toysDB'
+const BASE_URL =
+  process.env.NODE_ENV !== 'development'
+    ? '/api/toy/'
+    : '//localhost:3000/api/toy/'
 
-storageService
-  .query(KEY)
-  .then((toys) => (!toys ? _storeDemoData() : toys.length ? '' : _storeDemoData()))
-
-function query() {
-  return storageService.query(KEY)
+function query(filterBy) {
+  console.log('filterBy', filterBy)
+  return axios
+    .get(BASE_URL, { params: filterBy })
+    .then((res) => res.data)
 }
 
 function getById(id) {
-  return storageService.get(KEY, id)
+  return axios.get(BASE_URL + id).then((res) => res.data)
 }
 
 function save(toyToSave) {
   if (toyToSave._id) {
-    return storageService.put(KEY, toyToSave)
+    return axios
+      .put(BASE_URL + toyToSave._id, toyToSave)
+      .then((res) => res.data)
   } else {
-    return storageService.post(KEY, toyToSave)
+    return axios.post(BASE_URL, toyToSave)
   }
 }
 function remove(id) {
-  return storageService.remove(KEY, id)
+  return axios.delete(BASE_URL + id)
 }
 
 function addReview(oldToy, review) {
   return query().then((toys) => {
-    const idx = toys.findIndex((toy) => toy._id === oldToy._id)
+    const idx = toys.findIndex(
+      (toy) => toy._id === oldToy._id
+    )
     if (idx === -1) return Promise.reject()
     review._id = utilService.makeId()
     toys[idx].reviews.unshift(review)
@@ -36,412 +41,8 @@ function addReview(oldToy, review) {
   })
 }
 
-function _storeDemoData() {
-  const demoData = [
-    {
-      _id: 3833,
-      name: 'orci sed',
-      price: 45,
-      type: 'Funny',
-      createdAt: '1973-07-11T13:30:49.032Z',
-      labels: ['Doll', 'Puzzle', 'Outdoor'],
-      reviews: [
-        {
-          name: 'Pukit',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'I loved the product',
-        },
-        {
-          name: 'Shuli',
-          rate: 4,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: "It's the best product",
-        },
-        {
-          name: 'Karen',
-          rate: 2,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'Product is damaged',
-        },
-      ],
-      inStock: true,
-    },
-    {
-      _id: 3834,
-      name: 'sollicitudin curabitur',
-      price: 23,
-      type: 'Educational',
-      createdAt: '1981-08-27T15:09:21.294Z',
-      labels: ['On wheels', 'Box game', 'Art'],
-      reviews: [
-        {
-          name: 'Puki',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'I loved it',
-        },
-        {
-          name: 'Shuli',
-          rate: 3,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: "It's ok",
-        },
-        {
-          name: 'Karen',
-          rate: 2,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'Product arrived in bad shape and is damaged',
-        },
-      ],
-      inStock: true,
-    },
-    {
-      _id: 3835,
-      name: 'aenean adipiscing',
-      price: 16,
-      type: 'Funny',
-      createdAt: '1986-11-02T20:23:58.834Z',
-      labels: ['Baby', 'Doll'],
-      reviews: [
-        {
-          name: 'Puki',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'As always, great product',
-        },
-        {
-          name: 'Shuli',
-          rate: 1,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: "It's not recommended",
-        },
-        {
-          name: 'Karen',
-          rate: 2,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'Same same',
-        },
-      ],
-      inStock: false,
-    },
-    {
-      _id: 3836,
-      name: 'odio vel',
-      price: 46,
-      type: 'Educational',
-      createdAt: '1995-03-29T07:57:16.160Z',
-      labels: ['On wheels', 'Puzzle', 'Outdoor'],
-      reviews: [
-        {
-          name: 'Ben Bintz',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'I loved it',
-        },
-        {
-          name: 'Puki',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'As always, great product',
-        },
-        {
-          name: 'Shuli',
-          rate: 1,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: "It's not recommended",
-        },
-        {
-          name: 'Karen',
-          rate: 2,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'Same same',
-        },
-      ],
-      inStock: true,
-    },
-    {
-      _id: 3837,
-      name: 'pulvinar amet',
-      price: 74,
-      type: 'Educational',
-      createdAt: '1977-04-25T21:57:19.388Z',
-      labels: ['Puzzle'],
-      reviews: [],
-      inStock: true,
-    },
-    {
-      _id: 3838,
-      name: 'lectus mattis',
-      price: 49,
-      type: 'Adult',
-      createdAt: '1994-06-19T23:12:01.759Z',
-      labels: ['On wheels', 'Box game', 'Art'],
-      reviews: [
-        {
-          name: 'Ben Bintz',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'I loved it',
-        },
-        {
-          name: 'Puki',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'As always, great product',
-        },
-        {
-          name: 'Shuli',
-          rate: 1,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: "It's not recommended",
-        },
-        {
-          name: 'Karen',
-          rate: 2,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'Same same',
-        },
-      ],
-      inStock: true,
-    },
-    {
-      _id: 3839,
-      name: 'sollicitudin pharetra',
-      price: 42,
-      type: 'Funny',
-      createdAt: '1983-05-05T11:39:48.470Z',
-      labels: ['Art'],
-
-      reviews: [
-        {
-          name: 'Puki',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'I loved it',
-        },
-        {
-          name: 'Shuli',
-          rate: 3,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: "It's ok",
-        },
-        {
-          name: 'Karen',
-          rate: 2,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'Product arrived in bad shape and is damaged',
-        },
-      ],
-      inStock: true,
-    },
-    {
-      _id: 3840,
-      name: 'tincidunt dolor',
-      price: 62,
-      type: 'Educational',
-      createdAt: '1983-11-20T03:59:06.177Z',
-      labels: ['Box game', 'Art', 'Baby'],
-      reviews: [],
-      inStock: true,
-    },
-    {
-      _id: 3841,
-      name: 'turpis in',
-      price: 9,
-      type: 'Educational',
-      createdAt: '1986-05-08T09:40:52.307Z',
-      labels: ['On wheels'],
-      reviews: [],
-      inStock: true,
-    },
-    {
-      _id: 3842,
-      name: 'dui mattis',
-      price: 34,
-      type: 'Educational',
-      createdAt: '1989-04-30T10:25:14.765Z',
-      labels: ['Art', 'Baby', 'Doll'],
-      reviews: [],
-      inStock: false,
-    },
-    {
-      _id: 3843,
-      name: 'rutrum nullam',
-      price: 23,
-      type: 'Funny',
-      createdAt: '1980-03-03T19:33:09.854Z',
-      labels: ['Box game'],
-      reviews: [
-        {
-          name: 'Ben Bintz',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'I loved it',
-        },
-        {
-          name: 'Puki',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'As always, great product',
-        },
-        {
-          name: 'Shuli',
-          rate: 1,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: "It's not recommended",
-        },
-        {
-          name: 'Karen',
-          rate: 2,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'Same same',
-        },
-      ],
-      inStock: true,
-    },
-    {
-      _id: 3844,
-      name: 'lectus id',
-      price: 42,
-      type: 'Educational',
-      createdAt: '1987-04-20T12:41:47.897Z',
-      labels: ['On wheels'],
-      reviews: [
-        {
-          name: 'Ben Bintz',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'I loved it',
-        },
-        {
-          name: 'Puki',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'As always, great product',
-        },
-        {
-          name: 'Shuli',
-          rate: 1,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: "It's not recommended",
-        },
-        {
-          name: 'Karen',
-          rate: 2,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'Same same',
-        },
-      ],
-      inStock: false,
-    },
-    {
-      _id: 3845,
-      name: 'lectus ac',
-      price: 11,
-      type: 'Educational',
-      createdAt: '1991-05-13T15:44:21.389Z',
-      labels: ['Baby', 'Doll'],
-      reviews: [],
-      inStock: true,
-    },
-    {
-      _id: 3846,
-      name: 'mattis sed',
-      price: 18,
-      type: 'Educational',
-      createdAt: '1996-02-14T03:11:46.518Z',
-      labels: ['On wheels', 'Box game', 'Art'],
-      reviews: [
-        {
-          name: 'Ben Bintz',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'I loved it',
-        },
-        {
-          name: 'Puki',
-          rate: 5,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'As always, great product',
-        },
-        {
-          name: 'Shuli',
-          rate: 1,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: "It's not recommended",
-        },
-        {
-          name: 'Karen',
-          rate: 2,
-          date: new Date(Date.now() - 10 ** 10).toISOString().slice(0, 10),
-          text: 'Same same',
-        },
-      ],
-      inStock: true,
-    },
-    {
-      _id: 3847,
-      name: 'elit sollicitudin',
-      price: 74,
-      type: 'Adult',
-      createdAt: '1996-06-03T00:25:41.428Z',
-      labels: ['Doll', 'Puzzle', 'Outdoor'],
-      reviews: [],
-      inStock: false,
-    },
-    {
-      _id: 3848,
-      name: 'eget placerat',
-      price: 95,
-      type: 'Funny',
-      createdAt: '1975-08-03T04:45:44.718Z',
-      labels: ['Art'],
-      reviews: [],
-      inStock: false,
-    },
-    {
-      _id: 3849,
-      name: 'sit sollicitudin',
-      price: 17,
-      type: 'Educational',
-      createdAt: '1984-09-30T23:03:14.758Z',
-      labels: ['On wheels', 'Puzzle', 'Outdoor'],
-      reviews: [],
-      inStock: false,
-    },
-    {
-      _id: 3850,
-      name: 'aliquam eget',
-      price: 76,
-      type: 'Funny',
-      createdAt: '1984-02-18T21:41:01.529Z',
-      labels: ['On wheels', 'Box game', 'Art', 'Baby', 'Doll'],
-      reviews: [],
-      inStock: false,
-    },
-    {
-      _id: 3851,
-      name: 'porta massa',
-      price: 39,
-      type: 'Educational',
-      createdAt: '1980-03-16T09:22:35.017Z',
-      labels: ['On wheels', 'Puzzle', 'Outdoor'],
-      reviews: [],
-      inStock: true,
-    },
-    {
-      _id: 3852,
-      name: 'fringilla lacus',
-      price: 49,
-      type: 'Educational',
-      createdAt: '1979-01-04T15:01:56.335Z',
-      labels: ['Doll', 'Puzzle', 'Outdoor'],
-      reviews: [],
-      inStock: true,
-    },
-  ]
-  storageService.store(KEY, demoData)
+function _getUrl(id = '') {
+  return `${BASE_URL + id}`
 }
 
 export default {

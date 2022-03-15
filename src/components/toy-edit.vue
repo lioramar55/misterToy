@@ -4,24 +4,42 @@
     <form @submit.prevent="onToyEdit">
       <label
         >New name
-        <input type="text" v-model="toyToUpdate.name" placeholder="Enter name" />
+        <input
+          type="text"
+          v-model="toyToUpdate.name"
+          placeholder="Enter name"
+        />
       </label>
       <label
         >New price
-        <input type="number" v-model="toyToUpdate.price" placeholder="Enter price" />
+        <input
+          type="number"
+          v-model="toyToUpdate.price"
+          placeholder="Enter price"
+        />
       </label>
       <label>Update stock</label>
       <label>
         In stock
-        <input type="radio" v-model="toyToUpdate.inStock" value="true" />
+        <input
+          type="radio"
+          v-model="toyToUpdate.inStock"
+          value="true"
+        />
       </label>
       <label>
         Out of stock
-        <input type="radio" v-model="toyToUpdate.inStock" value="false" />
+        <input
+          type="radio"
+          v-model="toyToUpdate.inStock"
+          value="false"
+        />
       </label>
       <button>Save</button>
     </form>
-    <button @click="$router.push('/shop/' + toy._id)">Cancel</button>
+    <button @click="$router.push('/toy/' + toy._id)">
+      Cancel
+    </button>
   </section>
 </template>
 
@@ -50,8 +68,13 @@ export default {
       this.toy.inStock = this.toyToUpdate.inStock
       this.toy.price = this.toyToUpdate.price
       this.$store
-        .dispatch({ type: 'updateToy', toy: { ...this.toy } })
-        .then(() => this.$router.push('/shop/' + this.toy._id))
+        .dispatch({
+          type: 'updateToy',
+          toy: { ...this.toy },
+        })
+        .then(() =>
+          this.$router.push('/toy/' + this.toy._id)
+        )
     },
   },
 }

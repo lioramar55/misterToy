@@ -5,23 +5,35 @@
     <h3>Category: {{ toy.type }}</h3>
     <h3>Description</h3>
     <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum exercitationem soluta tenetur,
-      voluptatibus facilis nesciunt itaque dolorum totam iure nisi pariatur doloribus placeat
-      perferendis officiis magnam illum maxime harum amet explicabo alias. Excepturi sint asperiores
-      perferendis alias dolorem eos. Ea ratione voluptate quibusdam consectetur fugit accusamus,
-      earum, delectus in pariatur enim quisquam iure eos nostrum? Nihil est temporibus architecto
-      commodi under
+      Lorem ipsum, dolor sit amet consectetur adipisicing
+      elit. Ipsum exercitationem soluta tenetur,
+      voluptatibus facilis nesciunt itaque dolorum totam
+      iure nisi pariatur doloribus placeat perferendis
+      officiis magnam illum maxime harum amet explicabo
+      alias. Excepturi sint asperiores perferendis alias
+      dolorem eos. Ea ratione voluptate quibusdam
+      consectetur fugit accusamus, earum, delectus in
+      pariatur enim quisquam iure eos nostrum? Nihil est
+      temporibus architecto commodi under
     </p>
     <h3>
       Price:
       {{ $filters.currencyUSD(toy.price) }}
     </h3>
     <h4>{{ isAvailable }}</h4>
-    <span class="label" v-for="label in toy.labels" :key="label + toy._id">
+    <span
+      class="label"
+      v-for="label in toy.labels"
+      :key="label + toy._id"
+    >
       {{ label }}
     </span>
-    <button @click="$router.push('/shop/edit/' + toy._id)">Edit toy</button>
-    <button @click="$router.push('/shop/')">Back to list</button>
+    <button @click="$router.push('/toy/edit/' + toy._id)">
+      Edit toy
+    </button>
+    <button @click="$router.push('/toy/')">
+      Back to list
+    </button>
     <add-review @reviewAdded="onAddReview"></add-review>
     <toy-reviews :toy="toy"></toy-reviews>
   </section>
@@ -48,11 +60,19 @@ export default {
   },
   methods: {
     onAddReview(review) {
-      this.$store.dispatch({ type: 'addReview', review, toy: { ...this.toy } }).then(this.loadToy)
+      this.$store
+        .dispatch({
+          type: 'addReview',
+          review,
+          toy: { ...this.toy },
+        })
+        .then(this.loadToy)
     },
     loadToy() {
-      const { id } = this.$route.params
-      toyService.getById(+id).then((toy) => (this.toy = toy))
+      var { id } = this.$route.params
+      if (!isNaN(+id)) id = +id
+
+      toyService.getById(id).then((toy) => (this.toy = toy))
     },
   },
   computed: {

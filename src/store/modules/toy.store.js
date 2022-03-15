@@ -6,40 +6,25 @@ export default {
     filterBy: null,
   },
   getters: {
-    toysForDisplay({ toys, filterBy }) {
-      if (filterBy) {
-        var filteredToys = JSON.parse(JSON.stringify(toys))
-        if (filterBy.txt) {
-          const regex = new RegExp(filterBy.txt, 'i')
-          filteredToys = filteredToys.filter((toy) => regex.test(toy.name))
-        }
-        if (filterBy.inStock === 'inStock') {
-          filteredToys = filteredToys.filter((toy) => toy.inStock)
-        } else if (filterBy.inStock === 'outOfStock') {
-          filteredToys = filteredToys.filter((toy) => !toy.inStock)
-        }
-        if (filterBy.label.length) {
-          filteredToys = filteredToys.filter((toy) =>
-            filterBy.label.every((label) => toy.labels.find((toyLabel) => toyLabel === label))
-          )
-        }
-        return filteredToys
-      } else return toys
+    toysForDisplay({ toys }) {
+      return toys
     },
   },
   mutations: {
     load(state, { toys }) {
       state.toys = toys
     },
-    setFilter(state, { filterBy }) {
+    filter(state, { filterBy }) {
       state.filterBy = filterBy
+      this.dispatch({ type: 'loadFilteredToys', filterBy })
     },
     reviewAdded(state, { toys }) {
       state.toys = toys
     },
     updateToy(state, { updatedToy }) {
-      console.log('updatedToy', updatedToy)
-      const idx = state.toys.findIndex((toy) => toy._id === updatedToy._id)
+      const idx = state.toys.findIndex(
+        (toy) => toy._id === updatedToy._id
+      )
       if (idx === -1) return Promise.reject()
       state.toys[idx] = updatedToy
       return Promise.resolve()
@@ -51,8 +36,13 @@ export default {
         commit({ type: 'load', toys })
       })
     },
+    loadFilteredToys({ commit }, { filterBy }) {
+      toyService.query(filterBy).then((toys) => {
+        commit({ type: 'load', toys })
+      })
+    },
     setFilter({ commit }, { filterBy }) {
-      commit({ type: 'setFilter', filterBy })
+      commit({ type: 'filter', filterBy })
     },
     addReview({ commit }, { review, toy }) {
       toyService.addReview(toy, review).then((toys) => {
@@ -60,7 +50,11 @@ export default {
       })
     },
     updateToy({ commit }, { toy }) {
-      return toyService.save(toy).then((updatedToy) => commit({ type: 'updateToy', updatedToy }))
+      return toyService
+        .save(toy)
+        .then((updatedToy) =>
+          commit({ type: 'updateToy', updatedToy })
+        )
     },
   },
 }

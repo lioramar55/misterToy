@@ -6,7 +6,9 @@
       </div>
       <nav>
         <ul>
-          <li><router-link to="/shop">Toy Store</router-link></li>
+          <li>
+            <router-link to="/toy">Toy Store</router-link>
+          </li>
           <li><router-link to="/">Profile</router-link></li>
         </ul>
       </nav>

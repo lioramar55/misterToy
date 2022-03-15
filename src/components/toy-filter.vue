@@ -1,25 +1,48 @@
 <template>
   <section class="toy-filter">
-    <input type="text" placeholder="Search" v-model="filterBy.txt" @input="onInput" />
-    <label @click="setFilter"
-      >In stock
-      <input type="radio" v-model="filterBy.inStock" @change="setFilter" value="inStock" hidden />
-    </label>
-    <label @click="setFilter"
-      >Out of stock
-      <input
-        type="radio"
+    <input
+      type="text"
+      placeholder="Search"
+      v-model="filterBy.txt"
+      @input="onInput"
+    />
+    <label @click="setFilter">
+      By stock
+      <select
         v-model="filterBy.inStock"
         @change="setFilter"
-        value="outOfStock"
-        hidden
-      />
+      >
+        <option value="">All</option>
+        <option value="true">In stock</option>
+        <option value="false">Out of stock</option>
+      </select>
     </label>
-    <select @change="setFilter" v-model="filterBy.label" multiple>
-      <option v-for="label in labels" :key="label" :value="label">
-        {{ label }}
-      </option>
-    </select>
+    <label
+      >By label
+      <select
+        @change="setFilter"
+        v-model="filterBy.label"
+        multiple
+      >
+        <option
+          v-for="label in labels"
+          :key="label"
+          :value="label"
+        >
+          {{ label }}
+        </option>
+      </select>
+      <label
+        >Sort by:
+        <select
+          @change="setFilter"
+          v-model="filterBy.sortBy"
+        >
+          <option value="price">Price</option>
+          <option value="name">Name</option>
+        </select>
+      </label>
+    </label>
   </section>
 </template>
 
@@ -35,16 +58,30 @@ export default {
         sortBy: '',
         label: [],
       },
-      labels: ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor'],
+      labels: [
+        'On wheels',
+        'Box game',
+        'Art',
+        'Baby',
+        'Doll',
+        'Puzzle',
+        'Outdoor',
+      ],
     }
   },
   components: {},
   methods: {
     onInput() {
-      this.$store.dispatch({ type: 'setFilter', filterBy: { ...this.filterBy } })
+      this.$store.dispatch({
+        type: 'setFilter',
+        filterBy: JSON.parse(JSON.stringify(this.filterBy)),
+      })
     },
     setFilter() {
-      this.$store.dispatch({ type: 'setFilter', filterBy: { ...this.filterBy } })
+      this.$store.dispatch({
+        type: 'setFilter',
+        filterBy: JSON.parse(JSON.stringify(this.filterBy)),
+      })
     },
   },
 }

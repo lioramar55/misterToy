@@ -5,11 +5,17 @@
     <h4>{{ isAvailable }}</h4>
     <p>Category: {{ toy.type }}</p>
     <div class="labels">
-      <span class="label" v-for="label in toy.labels" :key="label + toy._id">
+      <span
+        class="label"
+        v-for="label in toy.labels"
+        :key="label + toy._id"
+      >
         {{ label }}
       </span>
     </div>
-    <button @click="$router.push('/shop/' + toy._id)">Details</button>
+    <button @click="$router.push('/toy/' + toy._id)">
+      Details
+    </button>
   </div>
 </template>
 
