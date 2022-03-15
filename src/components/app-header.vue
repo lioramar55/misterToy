@@ -9,7 +9,11 @@
           <li>
             <router-link to="/toy">Toy Store</router-link>
           </li>
-          <li><router-link to="/">Profile</router-link></li>
+          <li>
+            <router-link to="/dashboard"
+              >Dashboard</router-link
+            >
+          </li>
         </ul>
       </nav>
     </div>

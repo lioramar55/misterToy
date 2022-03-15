@@ -9,6 +9,40 @@ export default {
     toysForDisplay({ toys }) {
       return toys
     },
+    typesData({ toys }) {
+      const typesMap = {}
+      toys.forEach((toy) => {
+        if (!typesMap[toy.type]) {
+          typesMap[toy.type] = 0
+        }
+        typesMap[toy.type]++
+      })
+
+      for (let type in typesMap) {
+        const avgPrice = toys.reduce(
+          (acc, toy) =>
+            acc + (toy.type === type ? toy.price : 0),
+          0
+        )
+        typesMap[type] = avgPrice / typesMap[type]
+      }
+
+      return {
+        labels: Object.keys(typesMap),
+        datasets: [
+          {
+            data: Object.values(typesMap),
+            backgroundColor: [
+              '#77CEFF',
+              '#0079AF',
+              '#123E6B',
+              '#97B0C4',
+              '#A5C8ED',
+            ],
+          },
+        ],
+      }
+    },
   },
   mutations: {
     load(state, { toys }) {

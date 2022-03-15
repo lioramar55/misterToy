@@ -6,7 +6,6 @@ const BASE_URL =
     : '//localhost:3000/api/toy/'
 
 function query(filterBy) {
-  console.log('filterBy', filterBy)
   return axios
     .get(BASE_URL, { params: filterBy })
     .then((res) => res.data)
