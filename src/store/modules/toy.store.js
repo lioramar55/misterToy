@@ -6,10 +6,10 @@ export default {
     filterBy: null,
   },
   getters: {
-    toysForDisplay({ toys }) {
+    toys({ toys }) {
       return toys
     },
-    typesData({ toys }) {
+    pieData({ toys }) {
       const typesMap = {}
       toys.forEach((toy) => {
         if (!typesMap[toy.type]) {
@@ -39,6 +39,34 @@ export default {
               '#97B0C4',
               '#A5C8ED',
             ],
+          },
+        ],
+      }
+    },
+    barData({ toys }) {
+      const typesMap = {}
+      toys.forEach((toy) => {
+        if (!typesMap[toy.type]) {
+          typesMap[toy.type] = 1
+        } else typesMap[toy.type]++
+      })
+      for (let type in typesMap) {
+        const numOfToysInStock = toys.reduce(
+          (acc, toy) =>
+            acc +
+            (toy.inStock && toy.type === type ? 1 : 0),
+          0
+        )
+        typesMap[type] =
+          (numOfToysInStock / typesMap[type]) * 100
+      }
+      return {
+        labels: Object.keys(typesMap),
+        datasets: [
+          {
+            label: '% in stock',
+            data: Object.values(typesMap),
+            backgroundColor: '#97B0C4',
           },
         ],
       }

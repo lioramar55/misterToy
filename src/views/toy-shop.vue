@@ -9,7 +9,6 @@
 <script>
 import toyList from '../components/toy-list.vue'
 import toyFilter from '../components/toy-filter.vue'
-import toyService from '../services/toy-service.js'
 
 export default {
   name: 'toy-shop',
@@ -20,7 +19,7 @@ export default {
   },
   computed: {
     toys() {
-      return this.$store.getters.toysForDisplay
+      return this.$store.getters.toys
     },
   },
 }

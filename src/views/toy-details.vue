@@ -42,8 +42,8 @@
 
 <script>
 import toyService from '../services/toy-service'
-import toyReviews from './toy-reviews.vue'
-import addReview from './add-review.vue'
+import toyReviews from '../components/toy-reviews.vue'
+import addReview from '../components/add-review.vue'
 export default {
   name: 'toy-details',
   data() {

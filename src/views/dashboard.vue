@@ -1,30 +1,42 @@
 <template>
-  <section class="dashboard">
+  <section v-if="toys" class="dashboard">
     <h1>
       Dashboard - view stats about the shop and more...
     </h1>
     <h2>Average price per toy type:</h2>
-    <pie-chart :data="data"></pie-chart>
+    <pie-chart :data="pieData"></pie-chart>
     <h2>Inventory by type</h2>
+    <bar-chart :data="barData"></bar-chart>
   </section>
+  <section v-else>loading...</section>
 </template>
 
 <script>
 import pieChart from '../components/pie-chart.vue'
+import barChart from '../components/bar-chart.vue'
 export default {
+  name: 'dashboard',
   components: {
     pieChart,
+    barChart,
   },
   computed: {
-    data() {
-      console.log(
-        'this.$store.getters.typesData',
-        this.$store.getters.typesData
-      )
-      return this.$store.getters.typesData
+    toys() {
+      return this.$store.getters.toys
+    },
+    pieData() {
+      return this.$store.getters.pieData
+    },
+    barData() {
+      return this.$store.getters.barData
     },
   },
 }
 </script>
 
-<style></style>
+<style scoped>
+h1,
+h2 {
+  text-align: center;
+}
+</style>

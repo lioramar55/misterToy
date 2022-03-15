@@ -5,7 +5,7 @@ import {
 import home from '../views/home.vue'
 import toyShop from '../views/toy-shop.vue'
 import dashboard from '../views/dashboard.vue'
-import toyDetails from '../components/toy-details.vue'
+import toyDetails from '../views/toy-details.vue'
 import toyEdit from '../components/toy-edit.vue'
 const router = createRouter({
   history: createWebHashHistory(),

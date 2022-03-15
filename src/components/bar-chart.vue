@@ -1,17 +1,17 @@
 <template>
-  <PieChart :chartData="data" />
+  <BarChart :chartData="data" />
 </template>
 
 <script>
-import { PieChart } from 'vue-chart-3'
+import { BarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 
 Chart.register(...registerables)
 
 export default {
-  name: 'pie-chart',
+  name: 'bar-chart',
   props: { data: Object },
-  components: { PieChart },
+  components: { BarChart },
   created() {},
 }
 </script>
