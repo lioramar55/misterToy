@@ -25,6 +25,7 @@ function save(toyToSave) {
   }
 }
 function remove(id) {
+  console.log('id', id)
   return axios.delete(BASE_URL + id)
 }
 

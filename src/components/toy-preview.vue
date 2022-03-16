@@ -17,6 +17,11 @@
     >
       Edit toy
     </el-button>
+    <el-button
+      type="danger"
+      @click="$emit('removeToy', toy._id)"
+      >Delete
+    </el-button>
   </div>
 </template>
 

@@ -94,7 +94,7 @@ export default {
   methods: {
     goBack() {
       this.toy
-        ? this.$router.push('/toy/' + toy._id)
+        ? this.$router.push('/toy/' + this.toy._id)
         : this.$router.push('/toy/')
     },
     onToySave() {

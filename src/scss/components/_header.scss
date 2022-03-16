@@ -1,0 +1,23 @@
+header {
+  background-color: $primary;
+}
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  nav {
+    display: flex;
+    align-items: center;
+    ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      a {
+        padding: 1rem;
+        font-size: rem(22px);
+        &:hover {
+          color: $secondary;
+        }
+      }
+    }
+  }
+}

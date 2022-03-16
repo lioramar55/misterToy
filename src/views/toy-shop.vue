@@ -8,7 +8,10 @@
     >
       Add toy
     </el-button>
-    <toy-list :toys="toys"></toy-list>
+    <toy-list
+      :toys="toys"
+      @removeToy="onRemoveToy"
+    ></toy-list>
   </div>
 </template>
 
@@ -22,6 +25,11 @@ export default {
   components: {
     toyList,
     toyFilter,
+  },
+  methods: {
+    onRemoveToy(id) {
+      this.$store.dispatch({ type: 'removeToy', id })
+    },
   },
   computed: {
     toys() {

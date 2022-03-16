@@ -3,7 +3,10 @@
     <el-row>
       <el-col v-for="toy in toys" :key="toy._id" :span="8">
         <el-card :body-style="{ padding: '0px' }">
-          <toy-preview :toy="toy"></toy-preview>
+          <toy-preview
+            :toy="toy"
+            @removeToy="onRemoveToy"
+          ></toy-preview>
         </el-card>
       </el-col>
     </el-row>
@@ -23,6 +26,11 @@ export default {
   },
   components: {
     toyPreview,
+  },
+  methods: {
+    onRemoveToy(id) {
+      this.$emit('removeToy', id)
+    },
   },
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <header>
-    <div class="main-header main-layout">
+  <header class="main-layout">
+    <div class="main-header">
       <div class="logo">
         <router-link to="/"><h1>misterToy</h1></router-link>
       </div>

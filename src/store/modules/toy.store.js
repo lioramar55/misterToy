@@ -94,12 +94,23 @@ export default {
       state.toys[idx] = updatedToy
       return Promise.resolve()
     },
+    removeToy(state, { id }) {
+      const idx = state.toys.findIndex(
+        (toy) => toy._id === id
+      )
+      state.toys.splice(idx, 1)
+    },
   },
   actions: {
     loadToys({ commit }) {
       toyService.query().then((toys) => {
         commit({ type: 'load', toys })
       })
+    },
+    removeToy({ commit }, { id }) {
+      toyService
+        .remove(id)
+        .then(() => commit({ type: 'removeToy', id }))
     },
     loadFilteredToys({ commit }, { filterBy }) {
       toyService.query(filterBy).then((toys) => {
