@@ -106,28 +106,24 @@ export default {
     },
   },
   actions: {
-    loadToys({ commit }) {
-      toyService.query().then((toys) => {
-        commit({ type: 'load', toys })
-      })
+    async loadToys({ commit }) {
+      const toys = await toyService.query()
+      commit({ type: 'load', toys })
     },
-    removeToy({ commit }, { id }) {
-      toyService
-        .remove(id)
-        .then(() => commit({ type: 'removeToy', id }))
+    async removeToy({ commit }, { id }) {
+      await toyService.remove(id)
+      commit({ type: 'removeToy', id })
     },
-    loadFilteredToys({ commit }, { filterBy }) {
-      toyService.query(filterBy).then((toys) => {
-        commit({ type: 'load', toys })
-      })
+    async loadFilteredToys({ commit }, { filterBy }) {
+      const toys = await toyService.query(filterBy)
+      commit({ type: 'load', toys })
     },
     setFilter({ commit }, { filterBy }) {
       commit({ type: 'filter', filterBy })
     },
-    addReview({ commit }, { review, toy }) {
-      toyService.addReview(toy, review).then((toys) => {
-        commit({ type: 'reviewAdded', toys })
-      })
+    async addReview({ commit }, { review, toy }) {
+      const toys = await toyService.addReview(toy, review)
+      commit({ type: 'reviewAdded', toys })
     },
     async saveToy({ commit }, { toy }) {
       try {

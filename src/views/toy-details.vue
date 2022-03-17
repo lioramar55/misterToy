@@ -65,19 +65,18 @@ export default {
     addReview,
   },
   methods: {
-    onAddReview(review) {
-      this.$store
-        .dispatch({
-          type: 'addReview',
-          review,
-          toy: { ...this.toy },
-        })
-        .then(this.loadToy)
+    async onAddReview(review) {
+      await this.$store.dispatch({
+        type: 'addReview',
+        review,
+        toy: { ...this.toy },
+      })
+      this.loadToy
     },
-    loadToy() {
+    async loadToy() {
       var { id } = this.$route.params
-
-      toyService.getById(id).then((toy) => (this.toy = toy))
+      const toy = await toyService.getById(id)
+      this.toy = toy
     },
   },
   computed: {

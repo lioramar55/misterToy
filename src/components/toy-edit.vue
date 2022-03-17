@@ -66,12 +66,11 @@ export default {
       },
     }
   },
-  created() {
+  async created() {
     if (this.$route.params.id) {
       const { id } = this.$route.params
-      toyService.getById(id).then((toy) => {
-        this.toy = toy
-      })
+      const toy = await toyService.getById(id)
+      this.toy = toy
     }
   },
   computed: {
@@ -91,13 +90,13 @@ export default {
         ? this.$router.push('/toy/' + this.toy._id)
         : this.$router.push('/toy/')
     },
-    onToySave() {
+    async onToySave() {
       if (this.toy) {
         this.toy.name = this.toyToSave.name
         this.toy.inStock = this.toyToSave.inStock
         this.toy.price = this.toyToSave.price
       }
-      this.$store.dispatch({
+      await this.$store.dispatch({
         type: 'saveToy',
         toy: this.toy
           ? { ...this.toy }
