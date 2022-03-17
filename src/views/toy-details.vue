@@ -30,9 +30,6 @@
       <el-collapse-item name="6" title="Is available">{{
         isAvailable
       }}</el-collapse-item>
-      <el-collapse-item name="7" title="Labels"
-        ><label-display :toy="toy"></label-display
-      ></el-collapse-item>
     </el-collapse>
 
     <el-button
@@ -52,7 +49,6 @@
 import toyService from '../services/toy-service'
 import toyReviews from '../components/toy-reviews.vue'
 import addReview from '../components/add-review.vue'
-import labelDisplay from '../components/label-display.vue'
 export default {
   name: 'toy-details',
   data() {
@@ -67,7 +63,6 @@ export default {
   components: {
     toyReviews,
     addReview,
-    labelDisplay,
   },
   methods: {
     onAddReview(review) {
@@ -81,7 +76,6 @@ export default {
     },
     loadToy() {
       var { id } = this.$route.params
-      if (!isNaN(+id)) id = +id
 
       toyService.getById(id).then((toy) => (this.toy = toy))
     },

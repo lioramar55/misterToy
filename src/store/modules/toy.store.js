@@ -86,12 +86,16 @@ export default {
     reviewAdded(state, { toys }) {
       state.toys = toys
     },
-    updateToy(state, { updatedToy }) {
-      const idx = state.toys.findIndex(
-        (toy) => toy._id === updatedToy._id
-      )
-      if (idx === -1) return Promise.reject()
-      state.toys[idx] = updatedToy
+    updateToy(state, { savedToy }) {
+      if (savedToy._id) {
+        const idx = state.toys.findIndex(
+          (toy) => toy._id === savedToy._id
+        )
+        if (idx === -1) return Promise.reject()
+        state.toys[idx] = savedToy
+      } else {
+        state.toys.unshift(savedToy)
+      }
       return Promise.resolve()
     },
     removeToy(state, { id }) {
@@ -125,12 +129,14 @@ export default {
         commit({ type: 'reviewAdded', toys })
       })
     },
-    saveToy({ commit }, { toy }) {
-      return toyService
-        .save(toy)
-        .then((savedToy) =>
-          commit({ type: 'saveToy', savedToy })
-        )
+    async saveToy({ commit }, { toy }) {
+      try {
+        const savedToy = await toyService.save(toy)
+        commit({ type: 'updateToy', savedToy })
+        return savedToy
+      } catch (err) {
+        console.dir(err)
+      }
     },
   },
 }

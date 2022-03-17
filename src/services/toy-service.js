@@ -1,48 +1,66 @@
 import axios from 'axios'
-import { utilService } from './util-service.js'
 const BASE_URL =
   process.env.NODE_ENV !== 'development'
     ? '/api/toy/'
-    : '//localhost:3000/api/toy/'
+    : '//localhost:3030/api/toy/'
 
-function query(filterBy) {
-  return axios
-    .get(BASE_URL, { params: filterBy })
-    .then((res) => res.data)
-}
-
-function getById(id) {
-  return axios.get(BASE_URL + id).then((res) => res.data)
-}
-
-function save(toyToSave) {
-  if (toyToSave._id) {
-    return axios
-      .put(BASE_URL + toyToSave._id, toyToSave)
-      .then((res) => res.data)
-  } else {
-    return axios.post(BASE_URL, toyToSave)
+async function query(filterBy) {
+  try {
+    const res = await axios.get(BASE_URL, {
+      params: filterBy,
+    })
+    return res.data
+  } catch (err) {
+    return Promise.reject(err)
   }
 }
-function remove(id) {
-  console.log('id', id)
-  return axios.delete(BASE_URL + id)
+
+async function getById(id) {
+  try {
+    const res = await axios.get(BASE_URL + id)
+    return res.data
+  } catch (err) {
+    return Promise.reject(err)
+  }
 }
 
-function addReview(oldToy, review) {
-  return query().then((toys) => {
+async function save(toyToSave) {
+  if (toyToSave._id) {
+    try {
+      const res = await axios.put(
+        BASE_URL + toyToSave._id,
+        toyToSave
+      )
+      return res.data
+    } catch (err) {
+      return Promise.reject(err)
+    }
+  } else {
+    const res = await axios.post(BASE_URL, toyToSave)
+    return res.data
+  }
+}
+async function remove(id) {
+  try {
+    await axios.delete(BASE_URL + id)
+    return Promise.resolve()
+  } catch (err) {
+    return Promise.reject(err)
+  }
+}
+
+async function addReview(oldToy, review) {
+  try {
+    const toys = await query()
     const idx = toys.findIndex(
       (toy) => toy._id === oldToy._id
     )
     if (idx === -1) return Promise.reject()
-    review._id = utilService.makeId()
     toys[idx].reviews.unshift(review)
     return save(toys[idx])
-  })
-}
-
-function _getUrl(id = '') {
-  return `${BASE_URL + id}`
+  } catch (err) {
+    return Promise.reject(err)
+  }
 }
 
 export default {

@@ -1,15 +1,11 @@
 <template>
   <section v-if="toys" class="toy-list">
-    <el-row>
-      <el-col v-for="toy in toys" :key="toy._id" :span="8">
-        <el-card :body-style="{ padding: '0px' }">
-          <toy-preview
-            :toy="toy"
-            @removeToy="onRemoveToy"
-          ></toy-preview>
-        </el-card>
-      </el-col>
-    </el-row>
+    <article v-for="toy in toys" :key="toy._id" class="toy">
+      <toy-preview
+        :toy="toy"
+        @removeToy="onRemoveToy"
+      ></toy-preview>
+    </article>
   </section>
   <section v-else>Loading...</section>
 </template>

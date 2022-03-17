@@ -4,7 +4,6 @@
     <h3>Price: {{ $filters.currencyUSD(toy.price) }}</h3>
     <h4>{{ isAvailable }}</h4>
     <p>Category: {{ toy.type }}</p>
-    <label-display :toy="toy"></label-display>
     <el-button
       type="info"
       @click="$router.push('/toy/' + toy._id)"
@@ -26,14 +25,10 @@
 </template>
 
 <script>
-import labelDisplay from './label-display.vue'
 export default {
   name: 'toy-preview',
   props: {
     toy: Object,
-  },
-  component: {
-    labelDisplay,
   },
   computed: {
     isAvailable() {

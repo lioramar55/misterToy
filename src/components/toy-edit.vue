@@ -1,16 +1,10 @@
 <template>
-  <section class="toy-edit">
+  <section class="toy-edit main-layout">
     <el-page-header :content="title" @back="goBack">
       Cancel
     </el-page-header>
 
-    <el-descriptions
-      v-if="toy"
-      direction="vertical"
-      :column="4"
-      :size="size"
-      border
-    >
+    <el-descriptions v-if="toy" direction="vertical" border>
       <el-descriptions-item label="Toy name">{{
         toy.name
       }}</el-descriptions-item>
@@ -75,7 +69,7 @@ export default {
   created() {
     if (this.$route.params.id) {
       const { id } = this.$route.params
-      toyService.getById(+id).then((toy) => {
+      toyService.getById(id).then((toy) => {
         this.toy = toy
       })
     }
@@ -103,14 +97,13 @@ export default {
         this.toy.inStock = this.toyToSave.inStock
         this.toy.price = this.toyToSave.price
       }
-      this.$store
-        .dispatch({
-          type: 'saveToy',
-          toy: this.toy
-            ? { ...this.toy }
-            : { ...this.toyToSave },
-        })
-        .then(this.goBack)
+      this.$store.dispatch({
+        type: 'saveToy',
+        toy: this.toy
+          ? { ...this.toy }
+          : { ...this.toyToSave },
+      })
+      this.goBack()
     },
   },
 }
