@@ -7,6 +7,8 @@ import toyShop from '../views/toy-shop.vue'
 import dashboard from '../views/dashboard.vue'
 import toyDetails from '../views/toy-details.vue'
 import toyEdit from '../components/toy-edit.vue'
+import loginPage from '../views/login.vue'
+import signUpPage from '../views/signup.vue'
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -24,6 +26,16 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: dashboard,
+    },
+    {
+      path: '/login',
+      name: 'login-page',
+      component: loginPage,
+    },
+    {
+      path: '/signup',
+      name: 'sign-up',
+      component: signUpPage,
     },
     {
       path: '/toy/:id',

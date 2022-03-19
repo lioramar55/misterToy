@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import toyStore from './modules/toy.store.js'
+import userStore from './modules/user.store.js'
 const store = createStore({
   strict: true,
   state() {
@@ -9,10 +10,12 @@ const store = createStore({
   mutations: {},
   modules: {
     toyStore,
+    userStore,
   },
   actions: {
     loadApp({ dispatch }) {
       dispatch('loadToys')
+      dispatch('loadUser')
     },
   },
 })

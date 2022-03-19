@@ -65,6 +65,11 @@ a {
   &.active {
     background-color: $linkColor;
     color: $linkColor;
-    text-decoration: none;
+  }
+  &.main {
+    color: $primary;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
