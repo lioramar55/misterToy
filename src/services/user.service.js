@@ -7,6 +7,7 @@ const BASE_URL =
 export default {
   attemptLogin,
   addUser,
+  logout,
   getLoggedInUser,
 }
 
@@ -24,10 +25,9 @@ async function getLoggedInUser() {
 async function attemptLogin(user) {
   try {
     const res = await axios.post(BASE_URL + 'login', user)
-
     return res.data
   } catch (err) {
-    console.dir('cannot login', err)
+    Promise.reject('cannot login')
   }
 }
 async function addUser(user) {
@@ -36,5 +36,13 @@ async function addUser(user) {
     return res.data
   } catch (err) {
     Promise.reject('cannot add user')
+  }
+}
+
+async function logout() {
+  try {
+    return await axios.post(BASE_URL + 'logout')
+  } catch (err) {
+    console.dir('cannot logout')
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <section class="app-container">
-    <app-header></app-header>
+    <app-header @logout="logoutUser"></app-header>
     <div class="main-app">
       <router-view />
     </div>
@@ -11,6 +11,7 @@
 <script>
 import appHeader from './components/app-header.vue'
 import appFooter from './components/app-footer.vue'
+import userService from './services/user.service'
 export default {
   name: 'app',
   components: {
@@ -19,6 +20,11 @@ export default {
   },
   created() {
     this.$store.dispatch({ type: 'loadApp' })
+  },
+  methods: {
+    logoutUser() {
+      this.$store.dispatch({ type: 'logout' })
+    },
   },
 }
 </script>

@@ -14,8 +14,14 @@
               >Dashboard</router-link
             >
           </li>
-          <li>
-            <router-link to="/login">Login</router-link>
+          <li v-if="!user">
+            <router-link to="/login">Login</router-link> /
+            <router-link to="/signup">Register</router-link>
+          </li>
+          <li v-else>
+            <a href="#" @click="$emit('logout')"
+              >Logout {{ user }}</a
+            >
           </li>
         </ul>
       </nav>
@@ -26,6 +32,12 @@
 <script>
 export default {
   name: 'app-header',
+  computed: {
+    user() {
+      const user = this.$store.getters.user
+      return user ? user.fullname : ''
+    },
+  },
 }
 </script>
 

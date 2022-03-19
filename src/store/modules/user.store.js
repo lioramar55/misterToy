@@ -13,6 +13,9 @@ export default {
     userLoggedIn(state, { user }) {
       state.user = user
     },
+    userLoggedOut(state) {
+      state.user = null
+    },
   },
   actions: {
     async loadUser({ commit }) {
@@ -21,6 +24,16 @@ export default {
         commit({ type: 'userLoggedIn', user })
       } catch (err) {
         console.log('No logged in user')
+      }
+    },
+
+    async logout({ commit }) {
+      try {
+        await userService.logout()
+        commit({ type: 'userLoggedOut' })
+        this.$router.push('/')
+      } catch (err) {
+        console.log('cannot log u out')
       }
     },
 

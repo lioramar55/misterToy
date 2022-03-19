@@ -37,11 +37,12 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      this.$store.dispatch({
+    async onSubmit() {
+      const user = this.$store.dispatch({
         type: 'attemptLogin',
         user: { ...this.user },
       })
+      if (user) this.$router.push('/')
     },
   },
 }
