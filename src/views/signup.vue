@@ -43,12 +43,11 @@ export default {
   },
   methods: {
     async onSubmit() {
-      const addedUser = await this.$store.dispatch({
+      await this.$store.dispatch({
         type: 'onSignUp',
         user: { ...this.user },
       })
-      console.log('addedUser', addedUser)
-      if (addedUser) this.$router.push('/')
+      this.$router.push('/')
     },
   },
 }

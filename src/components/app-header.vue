@@ -10,18 +10,17 @@
             <router-link to="/toy">Toy Store</router-link>
           </li>
           <li>
-            <router-link to="/dashboard"
-              >Dashboard</router-link
-            >
+            <router-link to="/dashboard">Stats</router-link>
           </li>
           <li v-if="!user">
             <router-link to="/login">Login</router-link> /
             <router-link to="/signup">Register</router-link>
           </li>
           <li v-else>
-            <a href="#" @click="$emit('logout')"
-              >Logout {{ user }}</a
+            <router-link v-if="isAdmin" to="/admin"
+              >Admin</router-link
             >
+            <a href="#" @click="$emit('logout')">Logout</a>
           </li>
         </ul>
       </nav>
@@ -36,6 +35,11 @@ export default {
     user() {
       const user = this.$store.getters.user
       return user ? user.fullname : ''
+    },
+    isAdmin() {
+      const user = this.$store.getters.user
+      if (user) return user.isAdmin
+      return false
     },
   },
 }

@@ -86,13 +86,12 @@ export default {
         filterBy: JSON.parse(JSON.stringify(this.filterBy)),
       })
     },
-    setFilter(sort = null) {
-      if (sort) {
-        this.filterBy.sortBy = sort
-        if (this.$store.getters.lastSortBy === sort)
-          this.filterBy.dir =
-            this.filterBy.dir === 1 ? -1 : 1
-      }
+    setSortBy(sort) {
+      this.filterBy.sortBy = sort
+      if (this.$store.getters.lastSortBy === sort)
+        this.filterBy.dir = this.filterBy.dir === 1 ? -1 : 1
+    },
+    setFilter() {
       this.$store.dispatch({
         type: 'setFilter',
         filterBy: JSON.parse(JSON.stringify(this.filterBy)),

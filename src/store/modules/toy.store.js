@@ -119,6 +119,13 @@ export default {
       commit({ type: 'load', toys })
     },
     setFilter({ commit }, { filterBy }) {
+      if (filterBy.inStock === 'All') {
+        filterBy.inStock = ''
+      } else {
+        if (filterBy.inStock === 'In stock')
+          filterBy.inStock = true
+        else filterBy.inStock = false
+      }
       commit({ type: 'filter', filterBy })
     },
     async addReview({ commit }, { review, toy }) {

@@ -16,6 +16,7 @@ const store = createStore({
     loadApp({ dispatch }) {
       dispatch('loadToys')
       dispatch('loadUser')
+      dispatch('loadUsers')
     },
   },
 })
