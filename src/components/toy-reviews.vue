@@ -15,7 +15,7 @@
               <span>Rate:</span>
               {{ '⭐'.repeat(review.rate) }}
             </p>
-            <p><span>Review:</span> {{ review.text }}</p>
+            <p><span>Review:</span> {{ review.txt }}</p>
             <el-button
               type="danger"
               @click="removeReview(review._id)"
@@ -31,18 +31,23 @@
 </template>
 
 <script>
+import reviewService from '../services/review-service.js'
 export default {
   name: 'toy-reviews',
   props: {
     toy: Object,
   },
   data() {
-    return {}
+    return {
+      reviews: null,
+    }
   },
-  computed: {
-    reviews() {
-      return this.toy.reviews
-    },
+  async created() {
+    const reviews = await reviewService.query({
+      aboutToyId: this.toy._id,
+    })
+    this.reviews = reviews
+    console.log('reviews', reviews)
   },
 }
 </script>

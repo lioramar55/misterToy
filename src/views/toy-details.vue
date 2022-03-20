@@ -6,9 +6,14 @@
     />
     <h2>{{ toy.name }}</h2>
     <el-collapse accordion v-model="activeName">
-      <el-collapse-item name="1" title="Category">
-        {{ toy.type }}</el-collapse-item
-      >
+      <el-collapse-item name="1" title="Labels">
+        <div v-if="toy.labels" class="labels">
+          <span v-for="label in toy.labels" :key="label">{{
+            label
+          }}</span>
+        </div>
+        <div v-else>No labels</div>
+      </el-collapse-item>
       <el-collapse-item name="2" title="Description"
         >Lorem ipsum, dolor sit amet consectetur adipisicing
         elit. Ipsum exercitationem soluta tenetur,
@@ -17,9 +22,6 @@
         officiis magnam illum maxime harum amet explicabo
         alias. Excepturi sint asperiores
         perferendis</el-collapse-item
-      >
-      <el-collapse-item name="3" title="Task"
-        >Task</el-collapse-item
       >
       <el-collapse-item name="4" title="Published at">{{
         time
@@ -39,7 +41,13 @@
       Edit toy
     </el-button>
 
-    <add-review @reviewAdded="onAddReview"></add-review>
+    <add-review
+      v-if="user"
+      @reviewAdded="onAddReview"
+    ></add-review>
+    <router-link v-else to="/login" class="main"
+      >Log in to add reviews</router-link
+    >
     <toy-reviews :toy="toy"></toy-reviews>
   </section>
   <section v-else class="loader">Loading...</section>
@@ -57,8 +65,8 @@ export default {
       activeName: 1,
     }
   },
-  created() {
-    this.loadToy()
+  async created() {
+    await this.loadToy()
   },
   components: {
     toyReviews,
@@ -85,6 +93,9 @@ export default {
     },
     time() {
       return new Date(this.toy.createdAt).toDateString()
+    },
+    user() {
+      return this.$store.getters.user
     },
   },
 }

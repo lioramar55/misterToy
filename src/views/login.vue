@@ -36,6 +36,10 @@ export default {
       },
     }
   },
+  created() {
+    const user = this.$store.getters.user
+    if (user) this.$router.push('/')
+  },
   methods: {
     async onSubmit() {
       const user = this.$store.dispatch({

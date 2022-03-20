@@ -41,6 +41,10 @@ export default {
       user: { fullname: '', username: '', password: '' },
     }
   },
+  created() {
+    const user = this.$store.getters.user
+    if (user) this.$router.push('/')
+  },
   methods: {
     async onSubmit() {
       await this.$store.dispatch({

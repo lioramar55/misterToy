@@ -1,4 +1,5 @@
 import toyService from '../../services/toy-service.js'
+import reviewService from '../../services/review-service.js'
 
 export default {
   state: {
@@ -13,28 +14,34 @@ export default {
       return filterBy?.sortBy ? filterBy.sortBy : null
     },
     pieData({ toys }) {
-      const typesMap = {}
+      const labelsMap = {}
       toys.forEach((toy) => {
-        if (!typesMap[toy.type]) {
-          typesMap[toy.type] = 0
+        if (toy.labels) {
+          toy.labels.forEach((label) => {
+            if (!labelsMap[label]) {
+              labelsMap[label] = 0
+            }
+            labelsMap[label]++
+          })
         }
-        typesMap[toy.type]++
       })
 
-      for (let type in typesMap) {
-        const avgPrice = toys.reduce(
-          (acc, toy) =>
-            acc + (toy.type === type ? toy.price : 0),
-          0
-        )
-        typesMap[type] = avgPrice / typesMap[type]
+      for (let label in labelsMap) {
+        const avgPrice = toys.reduce((acc, toy) => {
+          if (toy.labels) {
+            toy.labels.forEach((toyLabel) => {
+              acc + (toyLabel === label ? toy.price : 0)
+            })
+          }
+        }, 0)
+        labelsMap[label] = avgPrice / labelsMap[label]
       }
 
       return {
-        labels: Object.keys(typesMap),
+        labels: Object.keys(labelsMap),
         datasets: [
           {
-            data: Object.values(typesMap),
+            data: Object.values(labelsMap),
             backgroundColor: [
               '#77CEFF',
               '#0079AF',
@@ -47,28 +54,35 @@ export default {
       }
     },
     barData({ toys }) {
-      const typesMap = {}
+      const labelsMap = {}
       toys.forEach((toy) => {
-        if (!typesMap[toy.type]) {
-          typesMap[toy.type] = 1
-        } else typesMap[toy.type]++
+        if (toy.labels) {
+          toy.labels.forEach((label) => {
+            if (!labelsMap[label]) {
+              labelsMap[label] = 1
+            } else labelsMap[label]++
+          })
+        }
       })
-      for (let type in typesMap) {
-        const numOfToysInStock = toys.reduce(
-          (acc, toy) =>
-            acc +
-            (toy.inStock && toy.type === type ? 1 : 0),
-          0
-        )
-        typesMap[type] =
-          (numOfToysInStock / typesMap[type]) * 100
+      for (let label in labelsMap) {
+        const numOfToysInStock = toys.reduce((acc, toy) => {
+          if (toy.labels) {
+            toy.labels.forEach((toyLabel) => {
+              acc +
+                (toy.inStock && toyLabel === label ? 1 : 0)
+            }),
+              0
+          }
+        })
+        labelsMap[label] =
+          (numOfToysInStock / labelsMap[label]) * 100
       }
       return {
-        labels: Object.keys(typesMap),
+        labels: Object.keys(labelsMap),
         datasets: [
           {
             label: '% in stock',
-            data: Object.values(typesMap),
+            data: Object.values(labelsMap),
             backgroundColor: '#97B0C4',
           },
         ],
@@ -82,9 +96,6 @@ export default {
     filter(state, { filterBy }) {
       state.filterBy = filterBy
       this.dispatch({ type: 'loadFilteredToys', filterBy })
-    },
-    reviewAdded(state, { toys }) {
-      state.toys = toys
     },
     updateToy(state, { savedToy }) {
       if (savedToy._id) {
@@ -130,9 +141,14 @@ export default {
       }
       commit({ type: 'filter', filterBy })
     },
-    async addReview({ commit }, { review, toy }) {
-      const toys = await toyService.addReview(toy, review)
-      commit({ type: 'reviewAdded', toys })
+    async addReview({ dispatch }, { review, toy }) {
+      review.aboutToyId = toy._id
+      try {
+        await reviewService.add(review)
+        dispatch('loadToys')
+      } catch (err) {
+        console.log('cannot add review')
+      }
     },
     async saveToy({ commit }, { toy }) {
       try {

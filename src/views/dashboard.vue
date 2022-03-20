@@ -3,9 +3,9 @@
     <h1>
       Dashboard - view stats about the shop and more...
     </h1>
-    <h2>Average price per toy type:</h2>
+    <h2>Average price per toy label:</h2>
     <pie-chart :data="pieData"></pie-chart>
-    <h2>Inventory by type</h2>
+    <h2>Inventory by label</h2>
     <bar-chart :data="barData"></bar-chart>
   </section>
   <section v-else>loading...</section>
