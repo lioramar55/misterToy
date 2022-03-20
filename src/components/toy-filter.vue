@@ -44,10 +44,10 @@
 
     <label>Sort By</label>
 
-    <el-button @click="setFilter('price')" type="info"
+    <el-button @click="setSortBy('price')" type="info"
       >Price
     </el-button>
-    <el-button @click="setFilter('name')" type="info"
+    <el-button @click="setSortBy('name')" type="info"
       >Name</el-button
     >
   </section>
@@ -87,9 +87,11 @@ export default {
       })
     },
     setSortBy(sort) {
+      console.log('sort', sort)
       this.filterBy.sortBy = sort
       if (this.$store.getters.lastSortBy === sort)
         this.filterBy.dir = this.filterBy.dir === 1 ? -1 : 1
+      this.setFilter()
     },
     setFilter() {
       this.$store.dispatch({

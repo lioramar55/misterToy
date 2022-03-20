@@ -94,7 +94,9 @@ export default {
         if (idx === -1) return Promise.reject()
         state.toys[idx] = savedToy
       } else {
-        state.toys.unshift(savedToy)
+        this.dispatch({
+          type: 'loadToys',
+        })
       }
       return Promise.resolve()
     },
@@ -119,7 +121,7 @@ export default {
       commit({ type: 'load', toys })
     },
     setFilter({ commit }, { filterBy }) {
-      if (filterBy.inStock === 'All') {
+      if (filterBy.inStock === 'All' || !filterBy.inStock) {
         filterBy.inStock = ''
       } else {
         if (filterBy.inStock === 'In stock')

@@ -15,9 +15,7 @@ export default {
   props: {
     toy: Object,
   },
-  created() {
-    console.log('this.toy', this.toy)
-  },
+  created() {},
 }
 </script>
 

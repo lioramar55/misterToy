@@ -1,7 +1,7 @@
 <template>
   <section class="toy-reviews">
     <h2>User reviews</h2>
-    <div v-if="toy.reviews.length" class="reviews">
+    <div v-if="reviews && reviews.length" class="reviews">
       <el-row>
         <el-col
           v-for="review in reviews"

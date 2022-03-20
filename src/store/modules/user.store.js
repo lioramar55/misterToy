@@ -27,12 +27,12 @@ export default {
   },
   actions: {
     async loadUser({ commit }) {
-      try {
-        const user = await userService.getLoggedInUser()
-        commit({ type: 'userLoggedIn', user })
-      } catch (err) {
-        console.log('No logged in user')
-      }
+      // try {
+      //   const user = await userService.getLoggedInUser()
+      //   commit({ type: 'userLoggedIn', user })
+      // } catch (err) {
+      //   console.log('No logged in user')
+      // }
     },
     async loadUsers({ commit }) {
       try {

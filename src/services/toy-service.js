@@ -1,66 +1,26 @@
-import axios from 'axios'
-const BASE_URL =
-  process.env.NODE_ENV !== 'development'
-    ? '/api/toy/'
-    : '//localhost:3030/api/toy/'
+import { httpService } from './http.service.js'
 
-async function query(filterBy) {
-  try {
-    const res = await axios.get(BASE_URL, {
-      params: filterBy,
-    })
-    return res.data
-  } catch (err) {
-    return Promise.reject(err)
-  }
+function query(filterBy) {
+  return httpService.get('toy', filterBy)
 }
 
-async function getById(id) {
-  try {
-    const res = await axios.get(BASE_URL + id)
-    return res.data
-  } catch (err) {
-    return Promise.reject(err)
-  }
+function getById(id) {
+  return httpService.get(`toy/${id}`)
 }
 
-async function save(toyToSave) {
+function save(toyToSave) {
   if (toyToSave._id) {
-    try {
-      const res = await axios.put(
-        BASE_URL + toyToSave._id,
-        toyToSave
-      )
-      return res.data
-    } catch (err) {
-      return Promise.reject(err)
-    }
+    return httpService.put(
+      `toy/${toyToSave._id}`,
+      toyToSave
+    )
   } else {
-    const res = await axios.post(BASE_URL, toyToSave)
-    return res.data
-  }
-}
-async function remove(id) {
-  try {
-    await axios.delete(BASE_URL + id)
-    return Promise.resolve()
-  } catch (err) {
-    return Promise.reject(err)
+    return httpService.post(`toy/`, toyToSave)
   }
 }
 
-async function addReview(oldToy, review) {
-  try {
-    const toys = await query()
-    const idx = toys.findIndex(
-      (toy) => toy._id === oldToy._id
-    )
-    if (idx === -1) return Promise.reject()
-    toys[idx].reviews.unshift(review)
-    return save(toys[idx])
-  } catch (err) {
-    return Promise.reject(err)
-  }
+function remove(id) {
+  return httpService.delete(`toy/${id}`)
 }
 
 export default {
@@ -68,5 +28,4 @@ export default {
   getById,
   save,
   remove,
-  addReview,
 }
