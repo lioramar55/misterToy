@@ -47,7 +47,15 @@ export default {
       aboutToyId: this.toy._id,
     })
     this.reviews = reviews
-    console.log('reviews', reviews)
+  },
+  methods: {
+    async removeReview(reviewId) {
+      await reviewService.remove(reviewId)
+      const reviews = await reviewService.query({
+        aboutToyId: this.toy._id,
+      })
+      this.reviews = reviews
+    },
   },
 }
 </script>
