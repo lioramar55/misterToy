@@ -17,6 +17,7 @@ axios.defaults.withCredentials = true
 async function login(user) {
   try {
     const res = await axios.post(BASE_URL + 'login', user)
+    socketService.emit('set-user-socket', res.data._id)
     return _saveLocalUser(res.data)
   } catch (err) {
     throw 'cannot login'
@@ -26,6 +27,7 @@ async function login(user) {
 async function signup(user) {
   try {
     const res = await axios.post(BASE_URL + 'signup', user)
+    socketService.emit('set-user-socket', res.data._id)
     return _saveLocalUser(res.data)
   } catch (err) {
     throw 'cannot add user'
@@ -36,6 +38,8 @@ async function logout() {
   try {
     sessionStorage.clear()
     await axios.post(BASE_URL + 'logout')
+    socketService.emit('unset-user-socket')
+
     return Promise.resolve('logged out')
   } catch (err) {
     throw 'cannot logout'
