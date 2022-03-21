@@ -34,16 +34,6 @@ export default {
       msgs: null,
     }
   },
-
-  async created() {
-    socketService.emit('toy-chat', this.toy._id)
-    socketService.on('addMsg', this.addMsg)
-
-    await this.addMsgs()
-  },
-  unmounted() {
-    socketService.off('addMsg', this.addMsg)
-  },
   methods: {
     sendMsg() {
       socketService.emit('newMsg', this.msg)
@@ -52,9 +42,9 @@ export default {
         from: '',
         to: '',
       }
-      this.addMsgs()
+      this.loadMsgs()
     },
-    async addMsgs() {
+    async loadMsgs() {
       try {
         const msgs = await toyService.getChatMsgs(
           this.toy._id
@@ -64,6 +54,16 @@ export default {
         console.log('Problem with loading msgs')
       }
     },
+  },
+  async created() {
+    socketService.emit('toy-chat', this.toy._id)
+    socketService.emit('toy-watch', this.toy._id)
+    socketService.on('addMsg', this.loadMsgs)
+
+    await this.loadMsgs()
+  },
+  unmounted() {
+    socketService.off('addMsg', this.loadMsgs)
   },
 }
 </script>
