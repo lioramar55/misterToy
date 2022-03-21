@@ -50,9 +50,10 @@ export default {
   },
   methods: {
     async removeReview(reviewId) {
-      await reviewService.remove(reviewId)
-      const reviews = await reviewService.query({
-        aboutToyId: this.toy._id,
+      const reviews = await this.$store.dispatch({
+        type: 'removeReview',
+        reviewId,
+        toyId: this.toy._id,
       })
       this.reviews = reviews
     },

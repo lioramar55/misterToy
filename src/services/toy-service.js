@@ -19,6 +19,10 @@ function save(toyToSave) {
   }
 }
 
+function getChatMsgs(toyId) {
+  return httpService.get(`toy/chat/` + toyId)
+}
+
 function remove(id) {
   return httpService.delete(`toy/${id}`)
 }
@@ -28,4 +32,5 @@ export default {
   getById,
   save,
   remove,
+  getChatMsgs,
 }

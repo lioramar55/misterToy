@@ -1,46 +1,54 @@
 <template>
-  <section class="toy-details main-layout" v-if="toy">
+  <section class="main-layout" v-if="toy">
     <el-page-header
       :content="toy.name"
       @back="$router.push('/toy/')"
     />
-    <h2>{{ toy.name }}</h2>
-    <el-collapse accordion v-model="activeName">
-      <el-collapse-item name="1" title="Labels">
-        <div v-if="toy.labels" class="labels">
-          <span v-for="label in toy.labels" :key="label">{{
-            label
-          }}</span>
-        </div>
-        <div v-else>No labels</div>
-      </el-collapse-item>
-      <el-collapse-item name="2" title="Description"
-        >Lorem ipsum, dolor sit amet consectetur adipisicing
-        elit. Ipsum exercitationem soluta tenetur,
-        voluptatibus facilis nesciunt itaque dolorum totam
-        iure nisi pariatur doloribus placeat perferendis
-        officiis magnam illum maxime harum amet explicabo
-        alias. Excepturi sint asperiores
-        perferendis</el-collapse-item
+    <div class="toy-details">
+      <h2>{{ toy.name }}</h2>
+      <ul class="details">
+        <li>
+          <div v-if="toy.labels" class="labels">
+            <p>Labels:</p>
+            <span
+              v-for="label in toy.labels"
+              :key="label"
+              >{{ label }}</span
+            >
+          </div>
+          <div v-else>No labels</div>
+        </li>
+        <li>
+          <p>Description:</p>
+          Lorem ipsum, dolor sit amet consectetur
+          adipisicing elit. Ipsum exercitationem soluta
+          tenetur, voluptatibus facilis nesciunt itaque
+          dolorum totam iure nisi pariatur doloribus placeat
+          perferendis officiis magnam illum maxime harum
+          amet
+        </li>
+
+        <li>
+          <p>Published at:</p>
+          {{ time }}
+        </li>
+        <li>
+          <p>Price:</p>
+          {{ $filters.currencyUSD(toy.price) }}
+        </li>
+        <li>
+          <p>Available?:</p>
+          {{ isAvailable }}
+        </li>
+      </ul>
+      <button
+        class="btn dark"
+        @click="$router.push('/toy/edit/' + toy._id)"
       >
-      <el-collapse-item name="4" title="Published at">{{
-        time
-      }}</el-collapse-item>
-      <el-collapse-item name="5" title="Price">{{
-        $filters.currencyUSD(toy.price)
-      }}</el-collapse-item>
-      <el-collapse-item name="6" title="Is available">{{
-        isAvailable
-      }}</el-collapse-item>
-    </el-collapse>
-
-    <el-button
-      type="primary"
-      @click="$router.push('/toy/edit/' + toy._id)"
-    >
-      Edit toy
-    </el-button>
-
+        Edit toy
+      </button>
+    </div>
+    <toy-chat :toy="toy"></toy-chat>
     <add-review
       v-if="user"
       @reviewAdded="onAddReview"
@@ -57,6 +65,7 @@
 import toyService from '../services/toy-service'
 import toyReviews from '../components/toy-reviews.vue'
 import addReview from '../components/add-review.vue'
+import toyChat from '../components/toy-chat.vue'
 export default {
   name: 'toy-details',
   data() {
@@ -71,6 +80,7 @@ export default {
   components: {
     toyReviews,
     addReview,
+    toyChat,
   },
   methods: {
     async onAddReview(review) {
@@ -101,8 +111,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.toy-details {
-  text-align: center;
-}
-</style>
+<style></style>

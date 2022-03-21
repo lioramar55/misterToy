@@ -1,5 +1,4 @@
 import toyService from '../../services/toy-service.js'
-import reviewService from '../../services/review-service.js'
 
 export default {
   state: {
@@ -140,15 +139,6 @@ export default {
         else filterBy.inStock = false
       }
       commit({ type: 'filter', filterBy })
-    },
-    async addReview({ dispatch }, { review, toy }) {
-      review.aboutToyId = toy._id
-      try {
-        await reviewService.add(review)
-        dispatch('loadToys')
-      } catch (err) {
-        console.log('cannot add review')
-      }
     },
     async saveToy({ commit }, { toy }) {
       try {
