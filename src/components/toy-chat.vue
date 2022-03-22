@@ -35,7 +35,9 @@ export default {
     return {
       msgToSend: {
         txt: '',
-        from: this.$store.getters.user?.fullname || 'Guest',
+        from:
+          this.$store.getters.user?.fullname ||
+          'Guest' + Date.now(),
         aboutToyId: this.toy._id,
       },
       msgs: null,
@@ -56,10 +58,10 @@ export default {
       if (doneTyping) this.whoTypes = null
     },
     sendMsg() {
+      if (!this.msgToSend.txt.length) return
       socketService.emit('newMsg', this.msgToSend)
       this.msgToSend = {
         txt: '',
-        from: '',
         to: '',
       }
       this.loadMsgs()
@@ -94,7 +96,9 @@ export default {
   async created() {
     socketService.emit('toy-chat', {
       toyId: this.toy._id,
-      userId: this.$store.getters.user._id,
+      userId:
+        this.$store.getters.user?._id ||
+        this.msgToSend.from,
     })
     socketService.emit('toy-watch', this.toy._id)
     socketService.on('addMsg', this.addMsg)
