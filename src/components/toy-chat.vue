@@ -15,6 +15,7 @@
       <input
         v-model="msgToSend.txt"
         @input="userTyping"
+        @blur="doneTyping"
         type="text"
         placeholder="You message..."
       />
@@ -48,12 +49,11 @@ export default {
         toyId: this.toy._id,
         user: { ...this.$store.getters.user },
       })
+      if (!this.msgToSend.txt.length) this.doneTyping()
     },
-    userTypes(username) {
+    userTypes({ username, doneTyping }) {
       this.whoTypes = username
-      setTimeout(() => {
-        this.whoTypes = null
-      }, 1500)
+      if (doneTyping) this.whoTypes = null
     },
     sendMsg() {
       socketService.emit('newMsg', this.msgToSend)
@@ -63,6 +63,14 @@ export default {
         to: '',
       }
       this.loadMsgs()
+      this.doneTyping()
+    },
+    doneTyping() {
+      socketService.emit('userTyping', {
+        toyId: this.toy._id,
+        user: { ...this.$store.getters.user },
+        doneTyping: true,
+      })
     },
     async loadMsgs() {
       try {
